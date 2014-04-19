@@ -62,11 +62,24 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% Recode labels as row vectors
+labels = zeros(m, num_labels);
+for i = 1:num_labels
+    labels(:, i) = (y == i);
+endfor
 
+% Add constant parameter to X
+X = [ones(m, 1) X];
 
+% Construct hidden layer
+hiddenLayer = sigmoid(X * Theta1');
+hiddenLayer = [ones(m, 1) hiddenLayer];
 
+% Construct hypotheses
+hypotheses = sigmoid(hiddenLayer * Theta2');
 
-
+% Get cost
+J = (1 / m) * sum(sum((-labels .* log(hypotheses)) - ((1 - labels) .* log(1 - hypotheses))));
 
 
 
