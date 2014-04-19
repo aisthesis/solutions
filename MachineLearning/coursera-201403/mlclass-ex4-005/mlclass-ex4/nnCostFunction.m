@@ -62,6 +62,9 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Part 1: Cost function
+
 % Recode labels as row vectors
 labels = zeros(m, num_labels);
 for i = 1:num_labels
@@ -89,15 +92,41 @@ reg = (lambda / (2 * m)) * (sum(sum(Theta1_nobias .* Theta1_nobias)) + sum(sum(T
 % Add regularization
 J = J + reg;
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Part 2: Backpropagation
 
+% variables for each activation layer
+a_1 = zeros(input_layer_size + 1, 1);
+z_2 = zeros(hidden_layer_size + 1, 1);
+a_2 = zeros(hidden_layer_size + 1, 1);
+z_3 = zeros(num_labels, 1);
+a_3 = zeros(num_labels, 1);
+delta_3 = zeros(num_labels, 1);
+delta_2 = zeros(hidden_layer_size + 1, 1);
 
+% Accumulators
+D2 = zeros(num_labels, hidden_layer_size + 1);
+D1 = zeros(hidden_layer_size, input_layer_size + 1);
 
+for t = 1:m
+    a_1 = X(t, :)';
+    z_2 = Theta1 * a_1;
+    a_2 = [1; sigmoid(z_2)];
+    z_3 = Theta2 * a_2;
+    a_3 = sigmoid(z_3);
+    delta_3 = a_3 - labels(t, :)';
+    delta_2 = Theta2' * delta_3 .* a_2 .* (1 - a_2);
+%    fprintf("a_1 is %d x %d\n", size(a_1));
+%    fprintf("z_2 is %d x %d\n", size(z_2));
+%    fprintf("a_2 is %d x %d\n", size(a_2));
+%    fprintf("z_3 is %d x %d\n", size(z_3));
+%    fprintf("a_3 is %d x %d\n", size(a_3));
+    D2 = D2 + (delta_3 * a_2');
+    D1 = D1 + (delta_2(2:end) * a_1');
+endfor
 
-
-
-
-
-
+Theta1_grad = (1 / m) * D1;
+Theta2_grad = (1 / m) * D2;
 
 % -------------------------------------------------------------
 
