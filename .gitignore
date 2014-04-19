@@ -5,3 +5,6 @@
 */.settings/
 */bin/
 *.swp
+
+# Course username and password
+*ml_login_data.mat

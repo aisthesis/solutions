@@ -78,10 +78,16 @@ hiddenLayer = [ones(m, 1) hiddenLayer];
 % Construct hypotheses
 hypotheses = sigmoid(hiddenLayer * Theta2');
 
-% Get cost
+% Get cost without regularization
 J = (1 / m) * sum(sum((-labels .* log(hypotheses)) - ((1 - labels) .* log(1 - hypotheses))));
 
+% Get regularization component
+Theta1_nobias = Theta1(:, 2:end);
+Theta2_nobias = Theta2(:, 2:end);
+reg = (lambda / (2 * m)) * (sum(sum(Theta1_nobias .* Theta1_nobias)) + sum(sum(Theta2_nobias .* Theta2_nobias)));
 
+% Add regularization
+J = J + reg;
 
 
 
