@@ -116,11 +116,6 @@ for t = 1:m
     a_3 = sigmoid(z_3);
     delta_3 = a_3 - labels(t, :)';
     delta_2 = Theta2' * delta_3 .* a_2 .* (1 - a_2);
-%    fprintf("a_1 is %d x %d\n", size(a_1));
-%    fprintf("z_2 is %d x %d\n", size(z_2));
-%    fprintf("a_2 is %d x %d\n", size(a_2));
-%    fprintf("z_3 is %d x %d\n", size(z_3));
-%    fprintf("a_3 is %d x %d\n", size(a_3));
     D2 = D2 + (delta_3 * a_2');
     D1 = D1 + (delta_2(2:end) * a_1');
 endfor
