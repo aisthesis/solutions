@@ -125,8 +125,20 @@ for t = 1:m
     D1 = D1 + (delta_2(2:end) * a_1');
 endfor
 
+% unregularized gradients
 Theta1_grad = (1 / m) * D1;
 Theta2_grad = (1 / m) * D2;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Part 3: Regularization
+
+% set first column (bias term) of regularization matrices to 0
+Theta1(:, 1) = 0;
+Theta2(:, 1) = 0;
+
+% add regularization to gradients
+Theta1_grad = Theta1_grad + (lambda / m) * Theta1;
+Theta2_grad = Theta2_grad + (lambda / m) * Theta2;
 
 % -------------------------------------------------------------
 
