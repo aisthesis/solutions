@@ -22,13 +22,8 @@ grad = zeros(size(theta));
 regularization = (lambda / (2 * m)) * sum(theta(2:end) .^ 2);
 J = sum(((X * theta) - y) .^ 2) / (2 * m) + regularization;
 
-
-
-
-
-
-
-
+grad = (1 / m) * sum(((X * theta) - y)' * X, 1);
+grad = grad + [0 ((lambda / m) * theta(2:end))'];
 
 % =========================================================================
 
