@@ -8,3 +8,6 @@
 
 # Course username and password
 *ml_login_data.mat
+
+# Unnecessary artifacts
+MachineLearning/coursera-201403/__MACOSX/
