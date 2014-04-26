@@ -5,6 +5,7 @@
 */.settings/
 */bin/
 *.swp
+*.DS_STORE
 
 # Course username and password
 *ml_login_data.mat
