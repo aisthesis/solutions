@@ -39,14 +39,18 @@ error_val = zeros(length(lambda_vec), 1);
 %
 %
 
+% Number of examples
+m = size(X, 1);
+m_val = size(Xval, 1);
 
+% Initialize a theta vector
+theta = zeros(size(X, 2), 1);
 
-
-
-
-
-
-
+for i = 1:length(lambda_vec)
+    theta = trainLinearReg(X, y, lambda_vec(i));
+    error_train(i) = sum(((X * theta) - y) .^ 2) / (2 * m);
+    error_val(i) = sum(((Xval * theta) - yval) .^ 2) / (2 * m_val);
+endfor
 
 % =========================================================================
 

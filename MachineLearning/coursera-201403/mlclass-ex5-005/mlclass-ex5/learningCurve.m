@@ -54,7 +54,7 @@ error_val   = zeros(m, 1);
 % ---------------------- Sample Solution ----------------------
 
 % Initialize a theta vector
-theta = zeros(m, 1);
+theta = zeros(size(X, 2), 1);
 
 % Number of cross validation examples
 m_val = size(Xval, 1);
