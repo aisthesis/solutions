@@ -53,11 +53,18 @@ error_val   = zeros(m, 1);
 
 % ---------------------- Sample Solution ----------------------
 
+% Initialize a theta vector
+theta = zeros(m, 1);
 
+% Number of cross validation examples
+m_val = size(Xval, 1);
 
-
-
-
+% Get errors for each training set size
+for i = 1:m
+    theta = trainLinearReg(X(1:i, :), y(1:i, :), lambda);
+    error_train(i) = sum(((X(1:i, :) * theta) - y(1:i)) .^ 2) / (2 * i);
+    error_val(i) = sum(((Xval * theta) - yval) .^ 2) / (2 * m_val);
+endfor
 
 % -------------------------------------------------------------
 
