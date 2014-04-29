@@ -21,3 +21,7 @@ Neural networks
 mlclass-ex5-005
 ---
 Bias vs. variance and regularized linear regression
+
+mlclass-ex6-005
+---
+Support Vector Machines
