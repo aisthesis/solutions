@@ -13,3 +13,6 @@
 
 # Unnecessary artifacts
 MachineLearning/coursera-201403/__MACOSX/
+
+# Artifacts from TrueCrypt
+*._*
