@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 /**
  * Executable boggle solver
  * Copyright (c) 2014 Marshall Farrier
@@ -9,7 +7,18 @@
  * @since 2014-04-29
  */
 
-int main(void) {
-    printf("Hello world!\n");
+#include <stdio.h>
+#include <stdbool.h>
+#include "trie.h"
+
+int main() {
+    int i;
+    Trienode t = maketrienode(false);
+
+    if (t.is_word) {
+        printf("Prefix forms a complete word.\n");
+    } else {
+        printf("Prefix does not form a complete word.\n");
+    }
     return 0;
 }

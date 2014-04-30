@@ -8,5 +8,14 @@
 # For makefile structure cf.
 # http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
 
-main: main.c
-	gcc -Wall main.c -o bin/main
+#main: main.c trie.c
+#	gcc -Wall main.c trie.c -o bin/main -I.
+
+main: main.o trie.o
+	gcc -o bin/main main.o trie.o
+
+main.o: main.c trie.h
+	gcc -c main.c
+
+trie.o: trie.c trie.h
+	gcc -c trie.c
