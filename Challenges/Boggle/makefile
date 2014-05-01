@@ -8,14 +8,18 @@
 # For makefile structure cf.
 # http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
 
-#main: main.c trie.c
-#	gcc -Wall main.c trie.c -o bin/main -I.
+CC=gcc
+BINDIR=./bin
 
-main: main.o trie.o
-	gcc -o bin/main main.o trie.o
+trie_test: trie_test.o trie.o
+	$(CC) -o $(BINDIR)/trie_test trie_test.o trie.o
 
-main.o: main.c trie.h
-	gcc -c main.c
+trie_test.o: trie_test.c trie.h
+	gcc -c trie_test.c
 
 trie.o: trie.c trie.h
 	gcc -c trie.c
+
+.PHONY: clean
+clean:
+	rm *.o *~ $(BINDIR)/*
