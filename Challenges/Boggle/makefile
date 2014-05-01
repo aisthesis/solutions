@@ -22,4 +22,4 @@ trie.o: trie.c trie.h
 
 .PHONY: clean
 clean:
-	rm *.o *~ $(BINDIR)/*
+	rm -f *.o *~ $(BINDIR)/*
