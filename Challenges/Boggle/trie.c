@@ -21,9 +21,9 @@
  * t.children[1] points to the node for 'b', etc. And if no prefix continues
  * with 'a', then t.children[0] points to NULL.
  */
-Trienode *maketrienodeptr() {
+Trie_node *maketrienodeptr() {
     int i;
-    Trienode *node = malloc(sizeof(Trienode));
+    Trie_node *node = malloc(sizeof(Trie_node));
 
     for (i = 0; i < ALPHABET_SIZE; ++i) {
         node->children[i] = NULL;
@@ -32,7 +32,7 @@ Trienode *maketrienodeptr() {
     return node;
 }
 
-void freetrienodeptr(Trienode *trienodeptr) {
+void freetrienodeptr(Trie_node *trienodeptr) {
     int i;
 
     for (i = 0; i < ALPHABET_SIZE; ++i) {
@@ -55,7 +55,7 @@ void freetrie(Trie *trieptr) {
 }
 
 void addword(Trie *trieptr, const char *word) {
-    Trienode *node = trieptr->root,
+    Trie_node *node = trieptr->root,
         *tmp;
     int index;
 
@@ -72,7 +72,7 @@ void addword(Trie *trieptr, const char *word) {
 }
 
 bool isprefix(const Trie *trieptr, const char *prefix) {
-    Trienode *nodeptr = trieptr->root;
+    Trie_node *nodeptr = trieptr->root;
     int index;
 
     while (*prefix != '\0') {
@@ -85,7 +85,7 @@ bool isprefix(const Trie *trieptr, const char *prefix) {
 }
 
 bool isword(const Trie *trieptr, const char *prefix) {
-    Trienode *nodeptr = trieptr->root;
+    Trie_node *nodeptr = trieptr->root;
     int index;
 
     while (*prefix != '\0') {

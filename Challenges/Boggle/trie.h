@@ -12,20 +12,20 @@
 
 #define ALPHABET_SIZE 26
 
-typedef struct trienode Trienode;
+typedef struct trie_node Trie_node;
 typedef struct trie Trie;
 
-struct trienode {
-    Trienode *children[ALPHABET_SIZE];
+struct trie_node {
+    Trie_node *children[ALPHABET_SIZE];
     bool is_word;
 };
 
-Trienode *maketrienodeptr();
+Trie_node *maketrienodeptr();
 // Must be called for each use of maketrienode() to free memory
-void freetrienodeptr(Trienode *);
+void freetrienodeptr(Trie_node *);
 
 struct trie {
-    Trienode *root;
+    Trie_node *root;
 };
 
 // return an empty trie
