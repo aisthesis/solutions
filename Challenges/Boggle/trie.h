@@ -20,7 +20,7 @@ struct trie_node {
     bool is_word;
 };
 
-Trie_node *maketrienodeptr();
+Trie_node *trie_makenodeptr();
 // Must be called for each use of maketrienode() to free memory
 void freetrienodeptr(Trie_node *);
 

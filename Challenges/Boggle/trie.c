@@ -21,7 +21,7 @@
  * t.children[1] points to the node for 'b', etc. And if no prefix continues
  * with 'a', then t.children[0] points to NULL.
  */
-Trie_node *maketrienodeptr() {
+Trie_node *trie_makenodeptr() {
     int i;
     Trie_node *node = malloc(sizeof(Trie_node));
 
@@ -46,7 +46,7 @@ void freetrienodeptr(Trie_node *trienodeptr) {
 Trie maketrie() {
     Trie trie;
 
-    trie.root = maketrienodeptr();
+    trie.root = trie_makenodeptr();
     return trie;
 }
 
@@ -62,7 +62,7 @@ void addword(Trie *trieptr, const char *word) {
     while (*word != '\0') {
         index = *word - 'a';
         if (node->children[index] == NULL) {
-            tmp = maketrienodeptr();
+            tmp = trie_makenodeptr();
             node->children[index] = tmp;
         }
         node = node->children[index];
