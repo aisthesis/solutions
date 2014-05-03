@@ -1,98 +1,58 @@
 /**
- * Trie (prefix tree) datastructure implementation
+ * Linked list implementation.
  * Copyright (c) 2014 Marshall Farrier
  * license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  * @author Marshall Farrier
- * @since 2014-04-29
+ * @since 2014-05-02
  */
 
-#include <stdio.h>
 #include <stdlib.h>
-#include "trie.h"
+#include "list.h"
 
-/**
- * Note that for integral data types in sequence, such as lowercase
- * letters, we don't need to include the value, which can be deduced
- * immediately from the position of the node in the `children' array
- * of the parent node.
- *
- * Specifically, t.children[0] points to the node for the character 'a',
- * t.children[1] points to the node for 'b', etc. And if no prefix continues
- * with 'a', then t.children[0] points to NULL.
- */
-Trie_node *trie_makenodeptr() {
-    int i;
-    Trie_node *node = malloc(sizeof(Trie_node));
+List list_make() {
+    List list;
+    list.head = NULL;
+    list.tail = NULL;
+    return list;
+}
 
-    for (i = 0; i < ALPHABET_SIZE; ++i) {
-        node->children[i] = NULL;
+void list_free(List *listptr) {
+    List_node *nodeptr1 = listptr->head, 
+        *nodeptr2;
+
+    while (nodeptr1 != NULL) {
+        nodeptr2 = nodeptr1->next;
+        free(nodeptr1);
+        nodeptr1 = nodeptr2;
     }
-    node->is_word = false;
-    return node;
+    listptr->head = NULL;
+    listptr->tail = NULL;
 }
 
-void trie_freenodeptr(Trie_node *trienodeptr) {
-    int i;
+void list_push(List *list, void *data) {
+    List_node *nodeptr = malloc(sizeof(List_node));
+    nodeptr->data = data;
+    nodeptr->next = list->head;
+    nodeptr->prev = NULL;
+    if (list->head == NULL) {
+        list->tail = nodeptr;
+    } 
+    list->head = nodeptr;
+}
 
-    for (i = 0; i < ALPHABET_SIZE; ++i) {
-        if (trienodeptr->children[i] != NULL) {
-            trie_freenodeptr(trienodeptr->children[i]);
-        }
+void *list_pop(List *list) {
+    List_node *oldhead = list->head;
+    // if the list is empty
+    if (oldhead == NULL) return NULL;
+
+    list->head = oldhead->next;
+    if (list->head == NULL) {
+        list->tail = NULL;
+    } else {
+        list->head->prev = NULL;
     }
-    free(trienodeptr);
-}
-
-Trie trie_make() {
-    Trie trie;
-
-    trie.root = trie_makenodeptr();
-    return trie;
-}
-
-void trie_free(Trie *trieptr) {
-    trie_freenodeptr(trieptr->root);
-}
-
-void trie_addword(Trie *trieptr, const char *word) {
-    Trie_node *node = trieptr->root,
-        *tmp;
-    int index;
-
-    while (*word != '\0') {
-        index = *word - 'a';
-        if (node->children[index] == NULL) {
-            tmp = trie_makenodeptr();
-            node->children[index] = tmp;
-        }
-        node = node->children[index];
-        word++;
-    }
-    node->is_word = true;
-}
-
-bool trie_isprefix(const Trie *trieptr, const char *prefix) {
-    Trie_node *nodeptr = trieptr->root;
-    int index;
-
-    while (*prefix != '\0') {
-        index = *prefix - 'a';
-        if (nodeptr->children[index] == NULL) { return false; }
-        nodeptr = nodeptr->children[index];
-        prefix++;
-    }
-    return true;
-}
-
-bool trie_isword(const Trie *trieptr, const char *prefix) {
-    Trie_node *nodeptr = trieptr->root;
-    int index;
-
-    while (*prefix != '\0') {
-        index = *prefix - 'a';
-        if (nodeptr->children[index] == NULL) { return false; }
-        nodeptr = nodeptr->children[index];
-        prefix++;
-    }
-    return nodeptr->is_word;
+    void *data = oldhead->data;
+    free(oldhead);
+    return data;
 }

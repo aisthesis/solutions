@@ -1,37 +1,33 @@
 /**
- * Trie (prefix tree) header file.
- * This trie will hold only lowercase letters.
+ * Doubly linked list.
+ * Nodes can carry any data type, as they are pointers
+ * to type void.
  * Copyright (c) 2014 Marshall Farrier
  * license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
  * @author Marshall Farrier
- * @since 2014-04-29
+ * @since 2014-05-02
  */
 
-#include <stdbool.h>
+typedef struct list_node List_node;
+typedef struct list List;
 
-#define ALPHABET_SIZE 26
-
-typedef struct trie_node Trie_node;
-typedef struct trie Trie;
-
-struct trie_node {
-    Trie_node *children[ALPHABET_SIZE];
-    bool is_word;
+struct list_node {
+    void *data;
+    List_node *prev;
+    List_node *next;  
 };
 
-Trie_node *trie_makenodeptr();
-// Must be called for each use of maketrienode() to free memory
-void trie_freenodeptr(Trie_node *);
-
-struct trie {
-    Trie_node *root;
+struct list {
+    List_node *head;
+    List_node *tail;
 };
 
-// return an empty trie
-Trie trie_make();
-// must be called for each use of trie_make() to free memory
-void trie_free(Trie *);
-void trie_addword(Trie *, const char *);
-bool trie_isprefix(const Trie *, const char *);
-bool trie_isword(const Trie *, const char *);
+// make an empty list
+List list_make();
+// free up memory used by a list that isn't needed
+void list_free(List *);
+// insert an item at the head of the list
+void list_push(List *, void *);
+// remove and return the item at the head of the list
+void *list_pop(List *);

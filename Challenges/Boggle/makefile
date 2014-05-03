@@ -12,6 +12,20 @@ CC=gcc
 CFLAGS=-I.
 BINDIR=./bin
 
+.PHONY: all
+all: tst_trie tst_list
+
+# list
+tst_list: tst_list.o list.o
+	$(CC) -o $(BINDIR)/tst_list tst_list.o list.o $(CFLAGS)
+
+tst_list.o: tst_list.c 
+	gcc -c tst_list.c $(CFLAGS)
+
+list.o: list.c
+	gcc -c list.c $(CFLAGS)
+	
+# trie
 tst_trie: tst_trie.o trie.o
 	$(CC) -o $(BINDIR)/tst_trie tst_trie.o trie.o $(CFLAGS)
 
