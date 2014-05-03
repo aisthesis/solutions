@@ -20,9 +20,9 @@ int main() {
         *emptystr = "",
         *goodprefix = "ca",
         *badprefix = "do";
-    Trie trie = maketrie();
+    Trie trie = trie_make();
 
-    addword(&trie, word);
+    trie_addword(&trie, word);
     test_prefix(&trie, goodprefix);
     test_prefix(&trie, badprefix);
     test_word(&trie, word);
@@ -30,17 +30,17 @@ int main() {
     puts("Before adding empty string to trie:");
     test_prefix(&trie, emptystr);
     test_word(&trie, emptystr);
-    addword(&trie, emptystr);
+    trie_addword(&trie, emptystr);
     puts("After adding empty string to trie:");
     test_prefix(&trie, emptystr);
     test_word(&trie, emptystr);
 
-    freetrie(&trie);
+    trie_free(&trie);
     return 0;
 }
 
 void test_prefix(Trie *trie, char *prefix) {
-    if (isprefix(trie, prefix)) {
+    if (trie_isprefix(trie, prefix)) {
         printf("\"%s\" is a prefix.\n", prefix);
     } else {
         printf("\"%s\" is not a prefix.\n", prefix);
@@ -48,7 +48,7 @@ void test_prefix(Trie *trie, char *prefix) {
 }
 
 void test_word(Trie *trie, char *word) {
-    if (isword(trie, word)) {
+    if (trie_isword(trie, word)) {
         printf("\"%s\" is a word.\n", word);
     } else {
         printf("\"%s\" is not a word.\n", word);

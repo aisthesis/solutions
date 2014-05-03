@@ -12,11 +12,11 @@ CC=gcc
 CFLAGS=-I.
 BINDIR=./bin
 
-trie_test: trie_test.o trie.o
-	$(CC) -o $(BINDIR)/trie_test trie_test.o trie.o $(CFLAGS)
+tst_trie: tst_trie.o trie.o
+	$(CC) -o $(BINDIR)/tst_trie tst_trie.o trie.o $(CFLAGS)
 
-trie_test.o: trie_test.c 
-	gcc -c trie_test.c $(CFLAGS)
+tst_trie.o: tst_trie.c 
+	gcc -c tst_trie.c $(CFLAGS)
 
 trie.o: trie.c
 	gcc -c trie.c $(CFLAGS)
