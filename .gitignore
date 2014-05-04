@@ -1,15 +1,15 @@
 #files to ignore
 .metadata/
-*/.classpath
-*/.project
-*/.settings/
-*/bin/
+**/.classpath
+**/.project
+**/.settings/
+**/bin/
 *.swp
 *.DS_STORE
 *.DS_Store
 
 # Course username and password
-*ml_login_data.mat
+**/ml_login_data.mat
 
 # Unnecessary artifacts
 MachineLearning/coursera-201403/__MACOSX/
