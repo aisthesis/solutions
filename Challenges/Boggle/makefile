@@ -13,7 +13,18 @@ CFLAGS=-I.
 BINDIR=./bin
 
 .PHONY: all
-all: tst_trie tst_list
+all: tst_trie tst_list tst_boggle
+
+# boggle
+tst_boggle: tst_boggle.o boggle.o list.o trie.o
+	$(CC) -o $(BINDIR)/tst_boggle tst_boggle.o boggle.o list.o trie.o $(CFLAGS)
+
+tst_boggle.o: tst_boggle.c 
+	gcc -c tst_boggle.c $(CFLAGS)
+
+boggle.o: boggle.c
+	gcc -c boggle.c $(CFLAGS)
+	
 
 # list
 tst_list: tst_list.o list.o

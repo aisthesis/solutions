@@ -9,6 +9,9 @@
  * @since 2014-05-02
  */
 
+#ifndef LIST_H
+#define LIST_H
+
 typedef struct list_node List_node;
 typedef struct list List;
 
@@ -31,3 +34,5 @@ void list_free(List *);
 void list_push(List *, void *);
 // remove and return the item at the head of the list
 void *list_pop(List *);
+
+#endif

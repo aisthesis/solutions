@@ -8,6 +8,9 @@
  * @since 2014-04-29
  */
 
+#ifndef TRIE_H
+#define TRIE_H
+
 #include <stdbool.h>
 
 #define ALPHABET_SIZE 26
@@ -35,3 +38,5 @@ void trie_free(Trie *);
 void trie_addword(Trie *, const char *);
 bool trie_isprefix(const Trie *, const char *);
 bool trie_isword(const Trie *, const char *);
+
+#endif
