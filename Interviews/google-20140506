@@ -1,0 +1,62 @@
+Hi Marshall, this is Offir from Google.
+
+Finds duplicates in a contact list. 
+
+public class Contact {
+    public String getEmail();
+    public String getName();
+    public String getPhone();
+    public long Id(); // unique per user
+}
+
+100,000 contacts per user.
+
+0: E=e1 P=p1
+1: E=e1 N=n1
+2: E=e2 N=n1
+10: P=p10
+11: P=p10, N=n10
+
+
+[0, 1, 2] [10, 11]
+
+in: List<Contact>
+out: List<List<Contact>>
+
+HashMap<String, List<Contact>> byEmail
+… byName
+… byPhone
+
+
+public List<List<Contact>> findDuplicates(List<Contact> contacts) {
+        HashMap<String, List<Contact>> byEmail = new HashMap<String, List<Contact>>();
+            for (Contact contact : contacts) {
+                    if (!byEmail.containsKey(contact.getEmail()) {
+                                byEmail.put(contact.getEmail(), new LinkedList<Contact>());
+                    }
+                    byEmail.get(contact.getEmail()).add(contact);
+            }
+                …
+                    
+}
+
+private HashMap<String, List<Contact>> byEmail(List<Contact> contacts) {
+        HashMap<String, List<Contact>> result = new HashMap<String, List<Contact>>();
+            for (Contact contact : contacts) {
+                    if (!result.containsKey(contact.getEmail()) {
+                                result.put(contact.getEmail(), new LinkedList<Contact>());
+                    }
+                    result.get(contact.getEmail()).add(contact);
+            }
+            return result;
+}
+
+Finally, suppose you want to put items in the same list if they are transitively
+related--i.e., contact1 and contact2 have same email and contact2 and contact3
+have same phone, so all in same list even though contact1 and contact3 have nothing
+in common.
+
+Answer (which I didn't get): View list as a graph, and add an edge whenever a relationship is found.
+Then go through the graph to find connected components. I mentioned disjoint sets but stumbled a bit.
+[As it turns out, disjoint sets are the way to find connected components. One would also
+need to preprocess the contact list into nodes with pointers to list representatives.]
