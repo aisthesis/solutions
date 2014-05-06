@@ -25,3 +25,7 @@ Bias vs. variance and regularized linear regression
 mlclass-ex6-005
 ---
 Support Vector Machines
+
+mlclass-ex7-005
+---
+K-means clustering and Principal Component Analysis (PCA)
