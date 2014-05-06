@@ -13,12 +13,11 @@ centroids = zeros(K, size(X, 2));
 %               the dataset X
 %
 
+% Randomly reorder the indices
+randidx = randperm(size(X, 1));
 
-
-
-
-
-
+% Take the first K of the randomly reordered rows 
+centroids = X(randidx(1:K), :);
 
 % =============================================================
 
