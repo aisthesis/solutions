@@ -2,26 +2,20 @@ import quadrotor.command as cmd
 from math import sqrt
 
 def plan_mission(mission):
-
-    # this is an example illustrating the different motion commands,
-    # replace them with your own commands and activate all beacons
+    """Guide an autonomous quadcopter through a group of beacons.
+    https://courses.edx.org/courses/TUMx/AUTONAVx/2T2014/courseware/535451105f364d2e852366ed8204cf68/568642e8ce5a42ec8108b57b0f86a818/
+    @author Marshall Farrier
+    @since 2014-05-08
+    """
     commands  = [
-        cmd.down(0.5),
-        cmd.right(1),
-        cmd.turn_left(45),
-        cmd.forward(sqrt(2)),
-        cmd.turn_right(45),
-        cmd.right(1),
-        cmd.turn_left(45),
-        cmd.forward(sqrt(0.5)),
-        cmd.turn_left(90),
-        cmd.forward(sqrt(0.5)),
-        cmd.turn_left(45),
+        cmd.up(1),
         cmd.forward(1),
-        cmd.turn_right(45),
-        cmd.backward(sqrt(2)),
+        cmd.left(2),
+        cmd.forward(4),
+        cmd.right(4),
+        cmd.backward(4),
         cmd.turn_left(45),
-        cmd.forward(1),
+        cmd.forward(2 * sqrt(2)),
     ]
 
     mission.add_commands(commands)
