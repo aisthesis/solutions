@@ -21,8 +21,8 @@ sigma2 = zeros(n, 1);
 %               should contain variance of the i-th feature.
 %
 
-
-
+mu = mean(X)';
+sigma2 = (sum(bsxfun(@minus, X, mu') .^ 2, 1) ./ m)';
 
 
 

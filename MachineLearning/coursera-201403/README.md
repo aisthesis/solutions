@@ -29,3 +29,7 @@ Support Vector Machines
 mlclass-ex7-005
 ---
 K-means clustering and Principal Component Analysis (PCA)
+
+mlclass-ex8-005
+---
+Anomaly detection and recommender systems
