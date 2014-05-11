@@ -15,6 +15,7 @@
 
 # Unnecessary artifacts
 MachineLearning/coursera-201403/__MACOSX/
+**/octave-workspace
 
 # Artifacts from TrueCrypt
 *._*
