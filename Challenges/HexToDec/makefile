@@ -14,9 +14,12 @@
 # CC = gcc
 # EXT = c
 # For C++
+# Show all warnings:
+# https://gcc.gnu.org/onlinedocs/gcc-4.4.0/gcc/Warning-Options.html#Warning-Options
 CFLAGS = '-Wall'
 CC = g++
 EXT = cpp
+# Suppress C++11 warnings
 CPPFLAGS = '-Wno-c++11-extensions'
 
 .PHONY: all
