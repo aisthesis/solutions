@@ -19,9 +19,7 @@
 CFLAGS = '-Wall'
 CC = g++
 EXT = cpp
-# Suppress C++11 warnings
-# https://gcc.gnu.org/onlinedocs/gcc-4.9.0/gcc/Warning-Options.html#Warning-Options
-CPPFLAGS = '-Wno-c++11-extensions'
+CPPFLAGS = '-std=c++11'
 
 .PHONY: all
 all: %
