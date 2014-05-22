@@ -10,12 +10,21 @@
  */
 
 #include <iostream>
+#include <string>
+#include <sstream>
 
 int main() {
-    long p, q;
+    int a;
+    std::string line;
+    std::istringstream iss;
 
-    while (std::cin >> p >> q) {
-        std::cout << p + q << std::endl;
+    while (std::getline(std::cin, line)) {
+        iss.clear();
+        iss.str(line);
+        iss >> a;
+        std::cout << a << std::endl;
+        
     }
+
     return 0;
 }
