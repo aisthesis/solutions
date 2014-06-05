@@ -178,11 +178,12 @@ void process_line(const std::string &line) {
     int len = customers.size() >= products.size() ? customers.size() : products.size();
     int *scorei = new int[len * len];
     set_scores(scorei, len, products, customers);
-    Hungarian hung(scorei, len);
-    hung.init();
-    score = scoreitodbl(hung.get_match_total());
+    Hungarian *hung = new Hungarian(scorei, len);
+    hung->init();
+    score = scoreitodbl(hung->get_match_total());
     printf("%4.2f\n", score);
     delete[] scorei;
+    delete hung;
 }
 
 std::vector<std::string> tokenize(const std::string &rawtxt, const char &tok) {
