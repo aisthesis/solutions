@@ -1,0 +1,34 @@
+pp. 13f.
+1   The death rate for treatment and control group is
+    almost identical: 27/1000 vs. 28/1000
+
+2   No. Accepting screening is observational.
+3   A natural experiment. Assignment was randomized by
+    nature. Moving the water source is what created the
+    only difference between the groups.
+4   Observational. Each union determined whether or not
+    it would use poor houses or out-relief.
+5   If the coefficient had been -0.755, he would have had
+    to conclude that out-relief causes a decrease in poverty.
+    If it had been 0.005, one would conclude that the
+    proportion of out-relief to poor houses has no bearing
+    on poverty.
+6   E(Sn) = n * mu
+    Var(Sn) = n * sigmaSq
+    E(Sn/n) = mu
+    Var(Sn/n) = sigmaSq / n
+7   E(Sn) = n * p
+    Var(Sn) = n * p * (1 - p)
+    E(Sn/n) = p
+    Var(Sn/n) = p * (1 - p) / n
+8   For an experiment conducted n times, the average
+    result approaches the mean as n approaches infinity.
+9   No. The rating of the ability to control pain is
+    observational. Moreover, the group size is small and
+    the length of the trial is short. One explanation:
+    On days when they had less pain, they attributed this
+    fact to the religious coping methods.
+10  I agree that association isn't causation. An excellent
+    example is the high (0.74) correlation between number
+    of telephone lines per capita and breast cancer death
+    rates.
