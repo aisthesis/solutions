@@ -1,0 +1,31 @@
+p. 23
+
+1a  F. This statement would assume that father's
+    height is the primary causal component. Due to 
+    regression to the mean, the likely height of the
+    son will be less than 73 inches.
+1b  b = r * sy / sx
+      = 0.501 * 2.81 / 2.74
+      = 0.51
+    a = ybar - b * xbar
+      = 68.7 - 0.51 * 67.7
+      = 34.2
+    y = 34.2 + 0.51 * x
+
+    RMS error
+    MSE = (1 - r^2) * var(y)
+        = (1 - 0.501^2) * 2.81^2
+        = 0.75 * 7.90
+        = 5.92
+    RMS = 2.43
+2   No. Numerous measurements will improve
+    the approximation, but they are all estimates.
+3   MSE: 0.010387
+    RMS: 0.101923
+    MSE gives a better sense of how far the data are
+    from the regression line
+
+    X: This is incorrect because MSE and RMS are not
+    calculated correctly.
+4   First diagram. The others don't seem to have a linear
+    correlation.
