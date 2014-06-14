@@ -159,8 +159,10 @@ int main() {
     std::string line;
 
     while (std::getline(std::cin, line)) {
-        std::transform(line.begin(), line.end(), line.begin(), tolower);
-        process_line(line);
+        if (line.size() > 0) {
+            std::transform(line.begin(), line.end(), line.begin(), tolower);
+            process_line(line);
+        }
     }
 
     return 0;
@@ -168,10 +170,17 @@ int main() {
 
 void process_line(const std::string &line) {
     double score;
-
     int semicolon_pos = line.find(';');
+    if (semicolon_pos <= 0) {
+        printf("%4.2f\n", 0.0);
+        return;
+    }
     std::string cust_str = line.substr(0, semicolon_pos);
     std::string prod_str = line.substr(semicolon_pos + 1, std::string::npos);
+    if (cust_str.size() == 0 || prod_str.size() == 0) {
+        printf("%4.2f\n", 0.0);
+        return;
+    }
     std::vector<std::string> customers = tokenize(cust_str, ',');
     std::vector<std::string> products = tokenize(prod_str, ',');
 
