@@ -18,7 +18,6 @@ import numpy as np
 import math
 
 def simulate(dt_start, dt_end, equities, allocations):
-    n_equities = len(equities)
     # We need closing prices so the timestamp should be hours=16.
     dt_timeofday = dt.timedelta(hours=16)
 
@@ -54,3 +53,14 @@ def simulate(dt_start, dt_end, equities, allocations):
     cumulative_return = pf_daily_values[-1]
 
     return volatility, ave_daily_return, sharpe, cumulative_return
+
+def optimize(startdate, enddate, equities):
+    n_equities = len(equities)
+    best_alloc = [0.0] * n_equities
+    best_sharpe = 0.0
+    return optimize_rec(startdate, enddate, equities, best_alloc, 0)
+
+def optimize_rec(startdate, enddate, equities, allocations, index):
+    print 'hello'
+    return allocations
+
