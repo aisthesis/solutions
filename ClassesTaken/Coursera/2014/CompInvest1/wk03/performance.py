@@ -31,6 +31,11 @@ def get_performance(normalized_prices, allocation):
 
     return volatility, ave_daily_return, sharpe, cumulative_return
 
+def optimize_benchmark(startdate, enddate, equities):
+    t0 = dt.datetime.now()
+    allocation, sharpe = optimize(startdate, enddate, equities)
+    t1 = dt.datetime.now()
+    return (t1 - t0).total_seconds(), allocation, sharpe
 
 def optimize(startdate, enddate, equities):
     normalized_prices = get_normalized_prices(startdate, enddate, equities)
