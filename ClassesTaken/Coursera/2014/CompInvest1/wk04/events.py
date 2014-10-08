@@ -44,7 +44,27 @@ nan = no information about any event.
 1 = status bit(positively confirms the event occurence)
 """
 
-def find_events(ls_symbols, d_data):
+def find_goes_below_five(symbols, market_data):
+    """
+    Event when actual close drops below $5
+
+    @return     a pandas dataframe marking each instance of the event with 1
+                and non-events with NAN
+    """
+    actual_closes = market_data['actual_close']
+    events = copy.deepcopy(actual_closes)
+    events = events * np.NAN
+    event_dates = actual_closes.index
+
+    for equity in symbols:
+        for i in range(1, len(event_dates)):
+            if actual_closes[equity].ix[event_dates[i-1]] >= 5.0 and
+                    actual_closes[equity].ix[event_dates[i]] < 5.0:
+                events[equity].ix[event_dates[i]] = 1
+
+    return events
+
+def find_abnormal_drop(ls_symbols, d_data):
     ''' Finding the event dataframe '''
     df_close = d_data['close']
     ts_market = df_close['SPY']
@@ -76,28 +96,39 @@ def find_events(ls_symbols, d_data):
     return df_events
 
 
-def create_study():
-    dt_start = dt.datetime(2008, 1, 1)
-    dt_end = dt.datetime(2009, 12, 31)
-    ldt_timestamps = du.getNYSEdays(dt_start, dt_end, dt.timedelta(hours=16))
+def create_study(dt_start, dt_end, event_finder, symbols_code, ofile_name):
+    """
+    Outputs a pdf charting average behavior surrounding the given event.
+    
+    Usage:
+    events.create_study(dt.datetime(2008, 1, 1), dt.datetime(2009, 12, 31),
+        events.find_abnormal_drop, 'sp5002012', 'MyEventStudy')
 
+    @type   dt_start:       datetime.datetime
+    @param  dt_start:       start date
+    @type   dt_end:         datetime.datetime
+    @param  dt_end:         end date
+    @type   event_finder:   function
+    @param  event_finder:   takes a list of equities and a dictionary of market data
+                            and outputs a pandas data frame in which events are marked
+                            1 and non-events marked as NANs
+    @type   symbols_code    string
+    @param  symbols_code    code for file containing list of symbols to use
+    @type   ofile_name           string
+    @param  ofile_name           descriptor for pdf output file. For example, if
+                            ofile_name is 'MyEventStudy', the results will be written to 
+                            'MyEventStudy.pdf'
+    """
     dataobj = da.DataAccess('Yahoo')
-    ls_symbols = dataobj.get_symbols_from_list('sp5002012')
+    ls_symbols = dataobj.get_symbols_from_list(symbols_code)
     ls_symbols.append('SPY')
-
-    ls_keys = ['open', 'high', 'low', 'close', 'volume', 'actual_close']
-    ldf_data = dataobj.get_data(ldt_timestamps, ls_symbols, ls_keys)
-    d_data = dict(zip(ls_keys, ldf_data))
-
-    for s_key in ls_keys:
-        d_data[s_key] = d_data[s_key].fillna(method='ffill')
-        d_data[s_key] = d_data[s_key].fillna(method='bfill')
-        d_data[s_key] = d_data[s_key].fillna(1.0)
-
-    df_events = find_events(ls_symbols, d_data)
-    print "Creating Study"
-    ep.eventprofiler(df_events, d_data, i_lookback=20, i_lookforward=20,
-                s_filename='MyEventStudy.pdf', b_market_neutral=True, b_errorbars=True,
+    print "Getting market data for {0} equities".format(len(ls_symbols))
+    d_data = mkt.get_market_data(dt_start, dt_end, ls_symbols)
+    print "Market data retrieved"
+    df_events = event_finder(ls_symbols, d_data)
+    print "Creating Study '{0}.pdf'".format(ofile_name)
+    ep.eventprofile_namer(df_events, d_data, i_lookback=20, i_lookforward=20,
+                s_filename="{0}.pdf".format(ofile_name), b_market_neutral=True, b_errorbars=True,
                 s_market_sym='SPY')
 
 if __name__ == '__main__':
