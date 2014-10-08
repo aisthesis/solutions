@@ -15,6 +15,7 @@ Created on January, 23, 2013
 import copy
 import datetime as dt
 import math
+import sys
 
 import numpy as np
 import pandas as pd
@@ -23,6 +24,9 @@ import QSTK.qstkstudy.EventProfiler as ep
 import QSTK.qstkutil.DataAccess as da
 import QSTK.qstkutil.qsdateutil as du
 import QSTK.qstkutil.tsutil as tsu
+
+sys.path.append('../common')
+import market as mkt
 
 """
 Accepts a list of symbols along with start and end date
@@ -39,7 +43,6 @@ Also, d1 = start date
 nan = no information about any event.
 1 = status bit(positively confirms the event occurence)
 """
-
 
 def find_events(ls_symbols, d_data):
     ''' Finding the event dataframe '''
