@@ -44,9 +44,14 @@ nan = no information about any event.
 1 = status bit(positively confirms the event occurence)
 """
 
-def find_goes_below_five(symbols, market_data):
+def find_goes_below(symbols, market_data, threshold):
     """
-    Event when actual close drops below $5
+    Event when actual close drops below the given threshold.
+
+    Can be called as parameter to create_study using a specific threshold:
+    import functools
+    event_finder = functools.partial(events.find_goes_below, threshold=5.0)
+    events.create_study(startdate, enddate, event_finder, symbol_code, ofile_name)
 
     @return     a pandas dataframe marking each instance of the event with 1
                 and non-events with NAN
@@ -58,13 +63,13 @@ def find_goes_below_five(symbols, market_data):
 
     for equity in symbols:
         for i in range(1, len(event_dates)):
-            if actual_closes[equity].ix[event_dates[i-1]] >= 5.0 and
-                    actual_closes[equity].ix[event_dates[i]] < 5.0:
+            if actual_closes[equity].ix[event_dates[i-1]] >= threshold and \
+                    actual_closes[equity].ix[event_dates[i]] < threshold:
                 events[equity].ix[event_dates[i]] = 1
 
     return events
 
-def find_abnormal_drop(ls_symbols, d_data):
+def find_abnormal_drops(ls_symbols, d_data):
     ''' Finding the event dataframe '''
     df_close = d_data['close']
     ts_market = df_close['SPY']
@@ -102,7 +107,7 @@ def create_study(dt_start, dt_end, event_finder, symbols_code, ofile_name):
     
     Usage:
     events.create_study(dt.datetime(2008, 1, 1), dt.datetime(2009, 12, 31),
-        events.find_abnormal_drop, 'sp5002012', 'MyEventStudy')
+        events.find_abnormal_drops, 'sp5002012', 'MyEventStudy')
 
     @type   dt_start:       datetime.datetime
     @param  dt_start:       start date
@@ -127,9 +132,10 @@ def create_study(dt_start, dt_end, event_finder, symbols_code, ofile_name):
     print "Market data retrieved"
     df_events = event_finder(ls_symbols, d_data)
     print "Creating Study '{0}.pdf'".format(ofile_name)
-    ep.eventprofile_namer(df_events, d_data, i_lookback=20, i_lookforward=20,
+    ep.eventprofiler(df_events, d_data, i_lookback=20, i_lookforward=20,
                 s_filename="{0}.pdf".format(ofile_name), b_market_neutral=True, b_errorbars=True,
                 s_market_sym='SPY')
 
 if __name__ == '__main__':
-    create_study()
+    create_study(dt.datetime(2008, 1, 1), dt.datetime(2009, 12, 31), 
+            find_abnormal_drops, 'sp5002012', 'MyEventStudy')
