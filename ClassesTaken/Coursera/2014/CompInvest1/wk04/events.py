@@ -69,6 +69,47 @@ def find_goes_below(symbols, market_data, threshold):
 
     return events
 
+def find_big_diff_from_sp(equities, market_data, threshold):
+    """
+    Event if equity move exceeds threshold. If threshold is positive,
+    equity must go up more than S&P by that amount. If it is negative,
+    equity must go down more than S&P by that amount.
+    Can be called as parameter to create_study using a specific threshold:
+    import functools
+    event_finder = functools.partial(events.find_big_diff_from_sp, threshold=-0.05)
+    events.create_study(startdate, enddate, event_finder, symbol_code, ofile_name)
+    """
+    closes = market_data['close']
+    sp500 = closes['SPY']
+    events = copy.deepcopy(closes)
+    events = events * np.NAN
+    close_dates = closes.index
+    if threshold > 0:
+        fill_above_sp(events, equities, close_dates, closes, sp500, threshold)
+    else:
+        fill_below_sp(events, equities, close_dates, closes, sp500, threshold)
+    return events
+
+def fill_above_sp(events, equities, dates, values, sp500, threshold):
+    sp_gain = 0.0
+    eq_gain = 0.0
+    for equity in equities:
+        for i in range(1, len(dates)):
+            sp_gain = sp500.ix[dates[i]] / sp500.ix[dates[i-1]]
+            eq_gain = values[equity].ix[dates[i]] / values[equity].ix[dates[i-1]]
+            if eq_gain - sp_gain >= threshold:
+                events[equity].ix[dates[i]] = 1
+
+def fill_below_sp(events, equities, dates, values, sp500, threshold):
+    sp_gain = 0.0
+    eq_gain = 0.0
+    for equity in equities:
+        for i in range(1, len(dates)):
+            sp_gain = sp500.ix[dates[i]] / sp500.ix[dates[i-1]]
+            eq_gain = values[equity].ix[dates[i]] / values[equity].ix[dates[i-1]]
+            if eq_gain - sp_gain <= threshold:
+                events[equity].ix[dates[i]] = 1
+
 def find_abnormal_drops(ls_symbols, d_data):
     ''' Finding the event dataframe '''
     df_close = d_data['close']
