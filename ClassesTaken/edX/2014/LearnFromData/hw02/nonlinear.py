@@ -31,8 +31,8 @@ def get_labels(points):
 
 def get_error_ratio(points, labels, weights):
     predictions = lin_reg.get_predictions(weights, points)
-    diff = labels - predictions
-    return np.sum(diff * diff) / points.shape[0]
+    n_errors = np.count_nonzero(predictions != labels)
+    return float(n_errors) / points.shape[0]
 
 def sim_linear():
     points = get_sample(1000)
@@ -48,3 +48,37 @@ def sim_lin_all():
         binary_lin = rand_linear.BinaryLinear()
         sum_e_in += sim_linear()
     return sum_e_in / repetitions
+
+def get_nl_weights():
+    points = get_sample(1000)
+    labels = get_labels(points)
+    features = get_nl_features(points)
+    return lin_reg.get_weights(features, labels)
+
+def get_nl_features(points):
+    features = np.zeros((points.shape[0], 5))
+    features[:, 0:1] = points[:, 0:1]
+    features[:, 2] = points[:, 0] * points[:, 1]
+    features[:, 3] = points[:, 0] * points[:, 0]
+    features[:, 4] = points[:, 1] * points[:, 1]
+    return features
+
+def simulate():
+    training_pts = get_sample(1000)
+    training_labels = get_labels(training_pts)
+    training_features = get_nl_features(training_pts)
+    weights = lin_reg.get_weights(training_features, training_labels)
+    test_pts = get_sample(1000)
+    test_labels = get_labels(test_pts)
+    test_features = get_nl_features(test_pts)
+    predictions = lin_reg.get_predictions(weights, test_features)
+    n_errors = np.count_nonzero(predictions != test_labels)
+    return float(n_errors) / test_labels.shape[0]
+
+def simulate_all():
+    n_reps = 1000
+    sum_error_ratio = 0.0
+    for i in range(n_reps):
+        sum_error_ratio += simulate()
+    return sum_error_ratio / n_reps
+
