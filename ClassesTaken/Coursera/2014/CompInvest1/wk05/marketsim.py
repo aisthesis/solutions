@@ -9,10 +9,17 @@ license http://opensource.org/licenses/gpl-license.php GNU Public License
 '''
 
 import datetime as dt
+import sys
 
-import QSTK.qstkutil.DataAccess as da
-import QSTK.qstkutil.qsdateutil as du
-import QSTK.qstkutil.tsutil as tsu
+#import QSTK.qstkutil.DataAccess as da
+#import QSTK.qstkutil.qsdateutil as du
+#import QSTK.qstkutil.tsutil as tsu
 
-def get_orders(infile):
+sys.path.append("../common")
+import order
+
+def get_daily_values(starting_cash, infile, outfile):
+    orders = order.get(infile)
+    list.sort(orders, key=lambda order: order.date)
+    return orders
 
