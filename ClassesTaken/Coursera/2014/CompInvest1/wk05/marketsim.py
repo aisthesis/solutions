@@ -30,22 +30,39 @@ def get_daily_values(starting_cash, infile, outfile):
     equities = get_equities(orders)
     market_data = market.get_market_data(startdate, enddate, equities)
     closes = market_data['close']
-    timestamps = closes.index
+    trading_days = closes.index
 
     # set up pandas DataFrame with all values equal to starting_cash
-    n_rows = len(timestamps)
+    n_rows = len(trading_days)
     initial_values = np.empty((n_rows, 1))
     initial_values.fill(starting_cash)
-    daily_values = pd.DataFrame(initial_values, index=timestamps, columns=['val'])
+    daily_values = pd.DataFrame(initial_values, index=trading_days, columns=['Value'])
     
-    # initialize portfolio
-    portfolio = Portfolio(starting_cash)
+    # initialize portfolio and prices dictionary
+    portfolio = Portfolio(float(starting_cash))
+    prices = dict(zip(equities, [0.0] * len(equities)))
+    
+    # get daily values
+    order_ix = 0
+    for trading_day in trading_days:
+        
+        # update prices
+        for equity in equities:
+            prices[equity] = closes.loc[trading_day, equity]
+
+        print prices
+        # execute orders
+        while order_ix < len(orders) and trading_day.date() == orders[order_ix].date.date():
+            portfolio.execute(orders[order_ix], prices)
+            order_ix += 1
+        daily_values.loc[trading_day, 'Value'] = portfolio.value(prices)
+
     print daily_values
     return daily_values
 
 def get_date_range(orders):
     """ return startdate and enddate given sorted orders """
-    return orders[0].date, orders[-1].date
+    return orders[0].date, orders[-1].date + dt.timedelta(days=1)
 
 def get_equities(orders):
     """ return a list of all equities for which orders are to be placed """
