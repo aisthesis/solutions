@@ -23,8 +23,13 @@ import market
 import order
 from portfolio import Portfolio
 
-def get_daily_values(starting_cash, infile, outfile):
-    orders = order.get(infile)
+def write_daily_values(starting_cash, infile, outfile):
+    daily_values = get_daily_values(starting_cash, infile)
+    daily_values.to_csv(header=False, float_format='%0.2f', date_format='%Y-%m-%d',
+            path_or_buf="output/{0}".format(outfile))
+
+def get_daily_values(starting_cash, infile):
+    orders = order.get("input/{0}".format(infile))
     list.sort(orders, key=lambda order: order.date)
     startdate, enddate = get_date_range(orders)
     equities = get_equities(orders)
@@ -50,14 +55,12 @@ def get_daily_values(starting_cash, infile, outfile):
         for equity in equities:
             prices[equity] = closes.loc[trading_day, equity]
 
-        print prices
         # execute orders
         while order_ix < len(orders) and trading_day.date() == orders[order_ix].date.date():
             portfolio.execute(orders[order_ix], prices)
             order_ix += 1
         daily_values.loc[trading_day, 'Value'] = portfolio.value(prices)
 
-    print daily_values
     return daily_values
 
 def get_date_range(orders):
@@ -78,4 +81,4 @@ def unique(items):
     return [item for item in items if item not in seen and not seen_add(item)]
 
 if __name__ == '__main__':
-    get_daily_values(*sys.argv[1:])
+    write_daily_values(*sys.argv[1:])
