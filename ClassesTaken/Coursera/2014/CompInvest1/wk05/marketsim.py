@@ -14,10 +14,6 @@ import sys
 import numpy as np
 import pandas as pd
 
-import QSTK.qstkutil.DataAccess as da
-import QSTK.qstkutil.qsdateutil as du
-import QSTK.qstkutil.tsutil as tsu
-
 sys.path.append("../common")
 import market
 import order
