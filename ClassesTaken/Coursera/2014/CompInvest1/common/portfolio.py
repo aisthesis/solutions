@@ -23,6 +23,15 @@ class Portfolio(object):
     def sell(self, equity, n_shares, total_price):
         self.buy(equity, -n_shares, -total_price)
 
+    def execute(self, order, prices):
+        total_price = prices[order.equity] * order.n_shares
+        if order.order_type == 'BUY':
+            self.buy(order.equity, order.n_shares, total_price)
+        elif order.order_type == 'SELL':
+            self.sell(order.equity, order.n_shares, total_price)
+        else:
+            raise ValueError("invalid order type: '{0}'".format(order.order_type)) 
+
     def value(self, prices):
         ret = self.cash
         for equity, n_shares in self.equities.iteritems():

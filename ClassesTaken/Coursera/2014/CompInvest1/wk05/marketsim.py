@@ -11,6 +11,9 @@ license http://opensource.org/licenses/gpl-license.php GNU Public License
 import datetime as dt
 import sys
 
+import numpy as np
+import pandas as pd
+
 import QSTK.qstkutil.DataAccess as da
 import QSTK.qstkutil.qsdateutil as du
 import QSTK.qstkutil.tsutil as tsu
@@ -28,10 +31,17 @@ def get_daily_values(starting_cash, infile, outfile):
     market_data = market.get_market_data(startdate, enddate, equities)
     closes = market_data['close']
     timestamps = closes.index
-    portfolio = Portfolio(starting_cash)
 
-    print startdate, enddate, equities
-    return orders
+    # set up pandas DataFrame with all values equal to starting_cash
+    n_rows = len(timestamps)
+    initial_values = np.empty((n_rows, 1))
+    initial_values.fill(starting_cash)
+    daily_values = pd.DataFrame(initial_values, index=timestamps, columns=['val'])
+    
+    # initialize portfolio
+    portfolio = Portfolio(starting_cash)
+    print daily_values
+    return daily_values
 
 def get_date_range(orders):
     """ return startdate and enddate given sorted orders """

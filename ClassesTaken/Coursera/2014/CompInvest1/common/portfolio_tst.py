@@ -9,8 +9,10 @@ license http://opensource.org/licenses/gpl-license.php GNU Public License
 Cf. https://docs.python.org/2/library/unittest.html
 '''
 
+import datetime as dt
 import unittest
 
+from order import Order
 from portfolio import Portfolio
 
 class TestPortfolio(unittest.TestCase):
@@ -39,6 +41,28 @@ class TestPortfolio(unittest.TestCase):
         p2.sell('foo', 5, 10.0)
         self.assertEqual(p2.equities['foo'], 5)
         self.assertAlmostEqual(p2.cash, self.initial_cash + 10.0)
+
+    def test_execute(self):
+        p2 = Portfolio(self.initial_cash, {'foo': 10})
+        order_date = dt.datetime(2000, 1, 1)
+        expected_cash = self.initial_cash
+        o1 = Order(order_date, 'bar', 'BUY', 2)
+        o2 = Order(order_date, 'foo', 'SELL', 5)
+        o3 = Order(order_date, 'foo', 'BLAH', 6)
+        # execute buy order
+        p2.execute(o1, self.prices)
+        expected_cash -= 7.0
+        self.assertEqual(p2.equities['bar'], 2)
+        self.assertAlmostEqual(p2.cash, expected_cash)
+        # execute sell order
+        p2.execute(o2, self.prices)
+        expected_cash += 25.0
+        self.assertEqual(p2.equities['foo'], 5)
+        self.assertAlmostEqual(p2.cash, expected_cash)
+        # try to execute invalid order type
+        with self.assertRaises(ValueError):
+            p2.execute(o3, self.prices)
+        
 
     def test_value(self):
         p1 = Portfolio(self.initial_cash)
