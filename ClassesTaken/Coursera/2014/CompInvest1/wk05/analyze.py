@@ -18,10 +18,26 @@ import pandas as pd
 
 sys.path.append("../common")
 #import market
+import performance as perf
 
 def show_analysis(infile):
     price_history = get_price_history(infile)
+    print_analysis(price_history)
     plot_price_history(price_history)
+
+def print_analysis(price_history):
+    price_dates = price_history.index
+    prices = price_history.values
+    vol, ave_ret, sharpe, cumulative = perf.get_performance(prices)
+    print "Details of the performance of the portfolio:"
+    print "Data range: {0} to {1}".format(price_dates[0].strftime('%Y-%m-%d'),
+            price_dates[-1].strftime('%Y-%m-%d'))
+    print "Initial value: {0}".format(prices[0, 0])
+    print "Final value: {0}".format(prices[-1, 0])
+    print "\nSharpe ratio of fund: {0}".format(sharpe[0])
+    print "\nTotal return of fund: {0}".format(cumulative[0])
+    print "\nStandard deviation of fund: {0}".format(vol[0])
+    print "\nAverage daily return of fund: {0}".format(ave_ret[0])
 
 def get_price_history(infile):
     price_history = pd.read_csv("output/{0}".format(infile), header=None, index_col=0, names=['Value'],
