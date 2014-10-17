@@ -26,9 +26,11 @@ def get_market_data(startdate, enddate, equities):
         market_data[key] = market_data[key].fillna(1.0)
     return market_data
 
+def get_dataframe(startdate, enddate, equities, key):
+    return get_market_data(startdate, enddate, equities)[key]
+
 def get_values(startdate, enddate, equities, key):
-    market_data = get_market_data(startdate, enddate, equities)
-    return market_data[key].values
+    return get_dataframe(startdate, enddate, equities, key).values
 
 def get_normalized_values(startdate, enddate, equities, key):
     values = get_values(startdate, enddate, equities, key)
