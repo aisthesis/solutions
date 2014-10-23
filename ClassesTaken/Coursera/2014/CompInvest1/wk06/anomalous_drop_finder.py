@@ -16,7 +16,7 @@ from order import Order
 
 class AnomalousDropFinder(EventFinder):
     def find(self):
-        super(AnomalousDropEvent, self).find()
+        super(AnomalousDropFinder, self).find()
         ref_data = self.data['SPY']
         data_dates = self.data.index
         eq_price_today = eq_price_yest = mkt_price_today = mkt_price_yest = 0.0
@@ -32,12 +32,13 @@ class AnomalousDropFinder(EventFinder):
                 mkt_ret = (mkt_price_today / mkt_price_yest) - 1.0
                 if eq_ret <= -0.03 and mkt_ret >= 0.02:
                     self.update_event_tbl(equity, i)
-                    self.add_orders(equity, i)
+                    self.add_event_orders(equity, i)
+        return self
 
-    def add_orders(self, equity, event_ix):
+    def add_event_orders(self, equity, event_ix):
         data_dates = self.data.index
         # do nothing if event is on last day of data
-        if event_ix < len(data_dates) - 1: return
+        if event_ix == len(data_dates) - 1: return
         self.orders.append(Order(data_dates[event_ix], equity, "BUY", 100))
         sell_ix = event_ix + 5
         if sell_ix >= len(data_dates): sell_ix = len(data_dates) - 1

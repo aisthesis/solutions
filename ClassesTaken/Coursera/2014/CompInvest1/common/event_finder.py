@@ -25,27 +25,33 @@ from abc import ABCMeta, abstractmethod
 import copy
 
 import numpy as np
+import pandas as pd
 
 class EventFinder(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self, equities, data):
+    def __init__(self, equities=None, data=None):
         """
         @type data: pandas dataframe containing all necessary information
         to define the event
         """
         self.equities = equities
         self.data = data
-        self.events = copy.deepcopy(self.data) * np.NAN
         self.orders = []
         self._search_completed = False
 
     @abstractmethod
     def find(self):
         print "Finding events"
+        # TODO use this after eliminating QSTK
+        # http://stackoverflow.com/questions/13784192/creating-an-empty-pandas-dataframe-then-filling-it
+        #self.events = pd.DataFrame(index=self.data.index, columns=self.equities)
+        #self.events.fillna(np.NAN)
+        self.events = copy.deepcopy(self.data) * np.NAN 
+        return self
 
     @abstractmethod
-    def add_orders(self, equity, event_ix):
+    def add_event_orders(self, equity, event_ix):
         pass
 
     def update_event_tbl(self, equity, event_ix):

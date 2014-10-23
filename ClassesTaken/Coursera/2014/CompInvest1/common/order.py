@@ -12,6 +12,7 @@ import csv
 import datetime as dt
 
 import numpy as np
+import pandas as pd
 
 import market as mkt
 from portfolio import Portfolio
@@ -23,6 +24,10 @@ class Order(object):
         self.equity = equity
         self.order_type = order_type
         self.n_shares = n_shares
+
+    def __str__(self):
+        return "{0},{1},{2},{3},{4},{5}".format(self.date.year, self.date.month, self.date.day,
+                self.equity, self.order_type, self.n_shares)
 
 def get(infile):
     """
