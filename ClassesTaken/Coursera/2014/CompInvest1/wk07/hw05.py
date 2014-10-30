@@ -33,7 +33,8 @@ def get_data(equity, startdate, enddate, k):
     data.loc[:, 'lower'] = lower_band
     data.loc[:, 'boll_val'] = (data.loc[:, equity].values.flatten() - \
             data.loc[:, 'SMA'].values.flatten()) / sigmas
-    print data.ix[-5:, 'boll_val']
+    # For purposes of quiz
+    print data.ix[90:100, 'boll_val']
     return data
 
 def plot_bollinger(price_history, equity):
