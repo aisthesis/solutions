@@ -40,13 +40,22 @@ def plot_bollinger(price_history, equity):
     plt.figure(figsize=(16.0, 12.0))
     plt.clf()
     plt.subplots_adjust(bottom=0.2)
+    # plot equity with bands
+    ax1 = plt.subplot(2, 1, 1)
     lines = plt.plot(price_history.index, price_history.iloc[:, 0:2].values)
     lines[1].set_color('r')
     plt.fill_between(price_history.index, price_history.loc[:, 'upper'].values,
             price_history.loc[:, 'lower'].values, facecolor='gray', alpha=0.5)
     plt.ylabel('Adjusted Close')
-    plt.xlabel('Date')
     plt.legend([equity, 'SMA'])
+    plt.setp(ax1.get_xticklabels(), visible=False)
+
+    # plot Bollinger feature
+    plt.subplot(2, 1, 2, sharex=ax1)
+    plt.plot(price_history.index, price_history.loc[:, 'boll_val'].values)
+    plt.fill_between(price_history.index, 1.0, -1.0, facecolor='gray', alpha=0.5)
+    plt.ylabel('Bollinger Feature')
+    plt.xlabel('Date')
     plt.xticks(rotation=45)
     plt.show()
 
