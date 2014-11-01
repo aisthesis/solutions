@@ -27,7 +27,7 @@ class BinaryLinear:
         self.slope = (self.p1.y - self.p2.y) / (self.p1.x - self.p2.x)
         self.intercept = self.p1.y - self.slope * self.p1.x
 
-    def label(self, point):
+    def label(self, x, y):
         if self.side:
-            return 1 if point.y > self.slope * point.x + self.intercept else -1 
-        return 1 if point.y < self.slope * point.x + self.intercept else -1
+            return 1 if y > self.slope * x + self.intercept else -1 
+        return 1 if y < self.slope * x + self.intercept else -1
