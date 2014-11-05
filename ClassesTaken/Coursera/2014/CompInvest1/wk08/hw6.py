@@ -14,44 +14,30 @@ import datetime as dt
 import sys
 
 import numpy as np
+import pandas as pd
 
 import QSTK.qstkutil.DataAccess as da
 
 sys.path.append('../common')
 import events
+import market as mkt
 
-def find_bollinger_breakdown(equities, mkt_data):
-
-def find_abnormal_drops(ls_symbols, d_data):
-    ''' Finding the event dataframe '''
-    df_close = d_data['close']
-    ts_market = df_close['SPY']
-
-    print "Finding Events"
-
-    # Creating an empty dataframe
-    df_events = copy.deepcopy(df_close)
-    df_events = df_events * np.NAN
-
-    # Time stamps for the event range
-    ldt_timestamps = df_close.index
-
-    for s_sym in ls_symbols:
-        for i in range(1, len(ldt_timestamps)):
-            # Calculating the returns for this timestamp
-            f_symprice_today = df_close[s_sym].ix[ldt_timestamps[i]]
-            f_symprice_yest = df_close[s_sym].ix[ldt_timestamps[i - 1]]
-            f_marketprice_today = ts_market.ix[ldt_timestamps[i]]
-            f_marketprice_yest = ts_market.ix[ldt_timestamps[i - 1]]
-            f_symreturn_today = (f_symprice_today / f_symprice_yest) - 1
-            f_marketreturn_today = (f_marketprice_today / f_marketprice_yest) - 1
-
-            # Event is found if the symbol is down more then 3% while the
-            # market is up more then 2%
-            if f_symreturn_today <= -0.03 and f_marketreturn_today >= 0.02:
-                df_events[s_sym].ix[ldt_timestamps[i]] = 1
-
-    return df_events
+def find_bollinger_breakdowns(equities, mkt_data):
+    closes = mkt_data['close']
+    eq_cols = [col for col in closes.columns if col != 'SPY']
+    sigmas = pd.rolling_std(closes, window=20)
+    mus = pd.rolling_mean(closes, window=20)
+    boll_vals = (closes - mus) / sigmas
+    events = copy.deepcopy(boll_vals)
+    events *= np.NAN
+    eventdates = events.index
+    for equity in eq_cols:
+        for i in range(1, len(eventdates)):
+            if boll_vals.loc[eventdates[i], equity] < -2.0 and \
+                    boll_vals.loc[eventdates[i - 1], equity] >= -2.0 and \
+                    boll_vals.loc[eventdates[i], 'SPY'] >= 1.4:
+                events.loc[eventdates[i], equity] = 1
+    return events
 
 if __name__ == '__main__':
     symbols_code = 'sp5002012'
@@ -59,4 +45,11 @@ if __name__ == '__main__':
     ls_symbols = dataobj.get_symbols_from_list(symbols_code)
     ls_symbols.append('SPY')
     events.create_study(dt.datetime(2008, 1, 1), dt.datetime(2009, 12, 31), 
-            find_abnormal_drops, ls_symbols, 'MyEventStudy')
+            find_bollinger_breakdowns, ls_symbols, 'BollingerQuizStudy')
+    """
+    equities = ['AAPL', 'GOOG', 'IBM', 'MSFT', 'SPY']
+    startdate = dt.datetime(2010, 11, 20)
+    enddate = dt.datetime(2010, 12, 31)
+    data = mkt.get_market_data(startdate, enddate, equities)
+    find_bollinger_breakdowns(equities, data)
+    """
