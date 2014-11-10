@@ -30,7 +30,7 @@ def get_wlin(features, labels):
 
 def get_wreg(features, labels, lambda_val):
     m = features.shape[1]
-    return np.linalg.inv(features.transpose().dot(features) + (lambda_val * np.ones((m, m))))\
+    return np.linalg.inv(features.transpose().dot(features) + lambda_val * np.identity(m))\
             .dot(features.transpose()).dot(labels)
 
 def get_predictions(features, wts):
@@ -43,7 +43,6 @@ def error(predicted, actual):
 def _solve_reg(fname, **kwargs):
     features, labels = get_data(fname)
     wts = kwargs.get('weights', get_wreg(features, labels, kwargs.get('lambda_val', 0)))
-    print wts
     predicted = get_predictions(features, wts)
     return error(predicted, labels), wts
 
@@ -54,23 +53,22 @@ def prob2():
     return ein, eout
 
 def prob3():
-    """ (0.02857142857142857, 0.084) """
+    """ (0.02857142857142857, 0.08) """
     ein, wts = _solve_reg('in.data', lambda_val=10**-3)
     eout = _solve_reg('out.data', weights=wts)[0]
     return ein, eout
 
 def prob4():
-    print 'ein'
+    """ (0.37142857142857144, 0.436) """
     ein, wts = _solve_reg('in.data', lambda_val=10**3)
-    print 'eout'
     eout = _solve_reg('out.data', weights=wts)[0]
     return ein, eout
 
 def prob5():
-    """ (0, 0.064, 0.02857142857142857) """
+    """ (-1, 0.056, 0.02857142857142857) """
     ein_best = eout_best = -1.0
     best_i = -2
-    for i in range(-10, 10):
+    for i in range(-2, 3):
         ein, wts = _solve_reg('in.data', lambda_val=10**i)
         eout = _solve_reg('out.data', weights=wts)[0]
         print "k: {0}, ein: {1}, eout: {2}".format(i, ein, eout)
