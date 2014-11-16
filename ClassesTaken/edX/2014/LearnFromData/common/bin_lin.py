@@ -10,6 +10,8 @@ license http://opensource.org/licenses/gpl-license.php GNU Public License
 
 import random
 
+import numpy as np
+
 class BinaryLinear:
     def __init__(self, *args):
         if args:
@@ -24,16 +26,17 @@ class BinaryLinear:
             self.x2 = random.uniform(-1, 1)
             self.y2 = random.uniform(-1, 1)
             self.side = random.randint(0, 1)
-        self.slope = (self.y1 - self.y2) / (self.x1 - self.x2)
-        self.intercept = self.y1 - self.slope * self.x1
-
-    def label(self, x, y, valiftrue=1, valiffalse=-1):
+        slope = (self.y1 - self.y2) / (self.x1 - self.x2)
+        intercept = self.y1 - slope * self.x1
+        self.wts = np.array((intercept, slope, -1.0)).reshape((3, 1))
         if self.side:
-            return valiftrue if y > self.slope * x + self.intercept else valiffalse 
-        return valiftrue if y < self.slope * x + self.intercept else valiffalse
+            self.wts = -1.0 * self.wts
+
+    def labels(self, features):
+        return np.sign(features.dot(self.wts))
 
 def get_random_points(n):
-    points = [(0., 0.)] * n
-    for i in range(n):
-        points[i] = (random.uniform(-1, 1), random.uniform(-1, 1))
-    return points
+    """ return a feature set of size n """
+    features = np.ones((n, 3))
+    features[:, 1:] = np.random.rand(n, 2) * 2.0 - 1.0
+    return features
