@@ -4,12 +4,9 @@ license http://opensource.org/licenses/MIT
 
 @author: Marshall Farrier
 @contact: marshalldfarrier@gmail.com
-@since: 2014-11-07
-@summary: Problems 2-6
-https://courses.edx.org/c4x/CaltechX/CS_1156x/asset/hw63esjeh.pdf
-2.  ein = 0.02857142857142857
-    eout = 0.084
-Something is wrong with the regularization implementation.
+@since: 2014-11-15
+@summary: Problems 1-5
+https://courses.edx.org/c4x/CaltechX/CS_1156x/asset/hw7ckmewj.pdf
 """
 
 import numpy as np
