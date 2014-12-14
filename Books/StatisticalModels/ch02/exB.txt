@@ -3,17 +3,9 @@ pp. 26ff.
 1   Data for both (1) and (4). The xi and yi are sample
     cases, and xbar and ybar are averages over a sample.
 2   Both are estimates.
-3   bhat =  0.049500
-    ahat =  439.01
-    mse =    5.4000e-05
-    rms =  0.0073485
-    errors =
-
-       -0.0100000
-        0.0110000
-        0.0020000
-        0.0030000
-       -0.0060000
+3   Cf. spreadsheet
+    bhat = 0.049407407
+    ahat = 439.0103704
 4   Data. Implied is that it is a lot
     of data, but the mean has been determined
     statistically, as has SD.
@@ -37,6 +29,9 @@ pp. 26ff.
         Actual: 270, SD: 15]
 9   Equation (7) is a model.
 10  In equation (7), a is an unobservable parameter.
+    In equation (7), b is an unobservable parameter.
+    In equation (7), epsilon_i is an unobservable random variable.
+    In equation (7), Y_i is observable, a random variable.
 11  According to equation (7), the 439.00 in table 1 is
     the observed value of a random variable.
 12  a   trivial
@@ -57,4 +52,61 @@ pp. 26ff.
     c   cov(x, x) = (1 / n) * sum1toN(xi - xbar)^2
                   = var(x)
     d   xybar - xbar * ybar = (1 / n) * (sum1toN(xi * yi) - sum1toN(xi) * sum1toN(yi))
+    e   follows from c and d
+15  r(x*, y*) = cov(x*, y*) / (s_x* * s_y*)
+              = k^2 cov(x, y) / (k^2 s_x s_y)
+              = cov(x, y) / (s_x s_y)
+              = r(x, y)
+16  Given that means are 0 and sigmas are 1, we have:
+    r = (1/n) sum1to_n(x_i y_i)
+    Moreover,
+    (1/n) sum1to_n((x_i + y_i)^2) = (1/n) sum1to_n(x_i^2 + 2 * x_i * y_i + y_i^2)
+                                  = ((1/n) sum1to_n(x_i^2)) + ((1/n) sum1to_n(y_i^2)) + (2 * (1/n) sum1to_n(x_i * y_i))
+                                  = 1 + 1 + 2r
+                                  = 2(1 + r)
+    Similarly,
+    (1/n) sum1to_n((x_i - y_i)^2) = (1/n) sum1to_n(x_i^2 - 2 * x_i * y_i + y_i^2)
+                                  = ((1/n) sum1to_n(x_i^2)) + ((1/n) sum1to_n(y_i^2)) - (2 * (1/n) sum1to_n(x_i * y_i))
+                                  = 1 + 1 - 2r
+                                  = 2(1 - r)
+    Both of the sums are non-negative. So, from the first we know -1 <= r, and from the second, we know r <= 1
+17  a   Cases where X_1 + X_2 = 8: (2, 6), (3, 5), (4, 4), (5, 3), (6, 2)
+        Of these 5 cases, X_1 was 3 only once. So p = 1/5
+    b   There are 6 cases where X_1 = 3, of which there is 1 where X_1 + X_2 = 7.
+        Answer: p = 1/6
+    c   Cases where X_1 + X_2 = 6: X_1 ranges from 1 to 5 with equal probabilities.
+        Conditional expectation is 3.0
+18  Since n is odd, we can write it as 2m + 1. And the proposition is trivial for m = 0, so
+    we can assume m >= 1. There is some k s.t. x_k = mu.
+    i   Obvious
+    ii  Suppose mu < c_1 < c_2.
+        f(c_2) - f(c_1) = sum1to_n(|x_i - c_2| - |x_i - c_1|)
+        Let's first consider those x_i where x_i <= c_1
+        In that case |x_i - c_2| - |x_i - c_1| = c_2 - x_i - c_1 + x_i = c_2 - c_1 > 0
+        Let's call the number of such cases a, where a >= m + 1. We now have:
+        f(c_2) - f(c_1) = a (c_2 - c_1) + sumxgtc_1(|x_i - c_2| - |x_i - c_1|)
+        Claim: when c_1 < x, |x_i - c_2| - |x_i - c_1| >= c_1 - c_2
+        Case 1: c_2 <= x_i. Then: |x_i - c_2| - |x_i - c_1| = x_i - c_2 - x_i + c_1 = c_1 - c_2
+        Case s: x_i < c_2. Then: 
+        |x_i - c_2| - |x_i - c_1| >= -|x_i - c_2| - |x_i - c_1|
+                                  = -(c_2 - x_i) - x_i + c_1
+                                  = c_1 - c_2
+        So:
+        f(c_2) - f(c_1) >= a (c_2 - c_1) - b (c_2 - c_1)
+                        = (a - b)(c_2 - c_1)
+        where b is the number of x_i where c_1 < x_i
+        But we know that a >= m + 1, and m >= b, so a > b. Hence,
+        f(c_2) - f(c_1) > 0 => f(c_2) > f(c_1)
+    iii If c_1 < c_2 < mu:
+        f(c_1) - f(c_2) = sum1to_n(|x_i - c_1| - |x_i - c_2|)
+        There are now a >= m + 1 cases where c_2 <= x_i. In those
+        cases |x_i - c_1| - |x_i - c_2| = c_2 - c_1.
+        In the remaining b cases (where x_i < c_2) c_1 - c_2 <= |x_i - c_1| - |x_i - c_2|
+        Case 1:  x_i <= c_1. Then |x_i - c_1| - |x_i - c_2| = c_1 - c_2
+        Case 2: c_1 < x_i < c_2. Then:
+        |x_i - c_1| - |x_i - c_2| >= -|x_i - c_1| - |x_i - c_2|
+                                   = -x_i + c_1 + x_i - c_2
+                                   = c_1 - c_2
+        Now f(c_1) - f(c_2) >= (a - b)(c_2 - c_1) where a > b.
+        So, f(c_1) > f(c_2)
 
