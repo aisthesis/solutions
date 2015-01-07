@@ -1,0 +1,4 @@
+#!/bin/bash
+pushd $HOME'/Workspace/numpy' > /dev/null
+python setup.py build -j 4 install --prefix $HOME/.local
+popd > /dev/null
