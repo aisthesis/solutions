@@ -29,28 +29,16 @@ class Solution {
         }
     private:
         void solve(const std::vector<int> &nums, const size_t &len) {
-            bool robbed_last = true;
             if (nums[1] < nums[0]) {
                 best[1] = best[0];
-                robbed_last = false;
             }
             for (int i = 2; i < len; ++i) {
-                if (robbed_last) {
-                    if (nums[i] + best[i - 2] > best[i - 1]) {
-                        // we can improve by robbing this house instead of previous
-                        best[i] = nums[i] + best[i - 2];
-                        robbed_last = true;
-                    }
-                    else {
-                        best[i] = best[i - 1];
-                        robbed_last = false;
-                    }
+                if (nums[i] + best[i - 2] > best[i - 1]) {
+                    // we can improve by robbing this house instead of previous
+                    best[i] = nums[i] + best[i - 2];
                 }
                 else {
-                    best[i] = best[i - 1] + nums[i];
-                    if (nums[i] > 0) {
-                        robbed_last = true;
-                    }
+                    best[i] = best[i - 1];
                 }
             }
         }
