@@ -21,13 +21,25 @@
     },
     '1.d4': {
       '1..Nf6': {
-        '2.c4': {},
+        '2.c4': {
+         '2..c5': {
+           '3.d5,e6': 'ModernBenoni'
+         },
+         '2..g6': 'KingsIndian'
+        },
         '2.Bg5': 'Trompovsky',
         '2.g3': 'QueensPawnGame'
       }
     },
     '1.c4': {
-      '1..Nf6': {}
+      '1..Nf6': {
+        '2.Nc3': {
+          '2..g6': {
+            '3.g3': 'English',
+            '3.d4': 'KingsIndian'
+          }
+        }
+      }
     },
     '1.Nf3': {
       '1..Nf6': {}
