@@ -5,7 +5,6 @@
 
 (function() {
   'use strict';
-
   var repertoire = {
     '1.e4': {
       '1..e5': {
@@ -13,7 +12,8 @@
           '2..Nc6': {
             '3.Bb5': 'Spanish'
           },
-          '2..Nf6': 'Russian'  
+          '2..Nf6': 'Russian',
+          '2..d6': 'Philidor'
         }
       },
       '1..c5': 'Sicilian',
