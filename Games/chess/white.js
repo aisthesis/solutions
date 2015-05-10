@@ -18,7 +18,8 @@
       },
       '1..c5': 'Sicilian',
       '1..e6': 'French',
-      '1..c6': 'Caro-Kann'
+      '1..c6': 'Caro-Kann',
+      '1..Nf6': 'Alekhine'
     }
   };
   return  repertoire;
