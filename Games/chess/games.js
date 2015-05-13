@@ -65,6 +65,27 @@
       "opening": "Spanish",
       "sources": ["Mikhail__Tal (HIARCS), 168"],
       "transposesTo": ["1.e4,e5 2.Nf3,Nc6 3.Bb5,Nf6 4.d4,Ne4: 5.0-0,a6 6.Ba4"]
+    },
+    {
+      "white": "150803dnas",
+      "black": "aisthesis",
+      "year": "2015",
+      "opening": "Kings Indian",
+      "sources": ["MyGames (HIARCS), 24"]
+    },
+    {
+      "white": "tinhamodek",
+      "black": "aisthesis",
+      "year": "2015",
+      "opening": "Trompovsky Attack",
+      "sources": ["MyGames (HIARCS), 27"]
+    },
+    {
+      "white": "aisthesis",
+      "black": "Robzored",
+      "year": "2015",
+      "opening": "Alekhine",
+      "sources": ["MyGames (HIARCS), 28"]
     }
   ];
   return  games;
