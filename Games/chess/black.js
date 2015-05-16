@@ -16,7 +16,8 @@
           }
         },
         '2.Nc3': {},
-        '2.Bc4': 'BishopsOpening'
+        '2.Bc4': 'BishopsOpening',
+        '2.f4': 'KingsGambit'
       }
     },
     '1.d4': {
@@ -45,5 +46,6 @@
       '1..Nf6': {}
     }
   };
+  console.log(repertoire);
   return repertoire;
 })();

@@ -22,5 +22,7 @@
       '1..Nf6': 'Alekhine'
     }
   };
+
+  console.log(repertoire);
   return  repertoire;
 })();

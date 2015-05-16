@@ -7,12 +7,14 @@
   'use strict';
 
   var repertoire = {
-    "1.e4,e5 2.Nf3,Nc6 3.Bb5": {
-      "3..a6": {
-        "4.Bc6:": "Exchange"
+    '1.e4,e5 2.f4': {
+      '2..ef4:': {
+        '3.Nf3': {
+          '3..d6': 'FischerDefense'
+        },
+        '3.Bc4': {}
       },
-      "3..Nf6": "BerlinDefence",
-      "3..f5": "SchliemannDefence"
+      '2..d5': 'Falkbeer'
     }
   };
   console.log(repertoire);
