@@ -8,7 +8,12 @@
 
   var repertoire = {
     '1.e4,e5 2.Nf3,Nc6 3.Bb5,a6 4.Ba5,Nf6 5.0-0,Bc5': {
-      '6.c3': {},
+      '6.c3': {
+        "Yates_Alekhine1922": [
+          "Alekhine 1908-23 34",
+          "Alexander_Alekhine (HIARCS) 1885"
+        ]
+      },
       '6.Ne5:': {},
       '6.d3': {
         '6..b5 7.Bb3': 'Graz'

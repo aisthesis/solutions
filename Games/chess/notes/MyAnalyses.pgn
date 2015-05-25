@@ -1,0 +1,72 @@
+[Event "Playing on Chess Time"]
+[Site "ChessTime"]
+[Date "2015.05.25"]
+[Round "1"]
+[White "aisthesis"]
+[Black "barish"]
+[Result "?"]
+
+1.e4 e5 
+2.Nf3 Nc6 
+3.Bb5 Nd4 
+4.Nxd4 exd4 
+5.O-O Ne7 
+6.d3 Nc6 
+7.f4 Be7 
+8.Nd2 O-O
+9.Nf3 a6 
+10.Ba4 { mf: +0.5} Bc5
+11.f5
+(   11.Bb3 Bd7
+    12.Ng5 h6
+    13.Nxf7 Rxf7
+    14.Qh5)
+(   11.Ne5 Nxe5
+    12.fxe5)
+(   11.a3)
+(   11.Ng5)
+11...d6
+(   11...d5
+    12.exd5 Qxd5
+    13.Bb3 Qd8
+    14.Bg5)
+(   11...h6)
+(   11...b5)
+(   11...Ba7)
+12.a3 Bd7
+13.Bb3 h6
+14.Bf4
+
+[Event "Playing on Chess Time"]
+[Site "ChessTime"]
+[Date "2015.05.25"]
+[Round "1"]
+[White "jptwee"]
+[Black "aisthesis"]
+[Result "?"]
+[ECO "C78"]
+
+1.e4 e5 
+2.Nf3 Nc6 
+3.Bb5 a6 
+4.Ba4 Nf6 
+5.O-O Bc5 
+6.c3 Ba7 
+7.d4 Nxe4 
+8.Re1 b5
+9.Bb3 d5 
+10.Nbd2 O-O 
+11.Nxe4 dxe4 
+12.Nxe5 Nxe5 
+13.dxe5 Qh4 
+14.g3 { mf: -2 }
+14...Bxf2+ 15.Kh1 
+(   15.Kxf2 Qxh2+
+    16.Ke3 Qxg3+
+    17.Kxe4 Bb7+
+    18.Kf5 Bf3 )
+15...Bxg3 
+16.Re2 Bg4 
+17.Qf1 Bf3+ 
+18.Kg1 Bxe5 
+
