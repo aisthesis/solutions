@@ -128,6 +128,22 @@
         }
       }
     },
+    "TwoKnights": {
+      "total": 1,
+      "variations": {
+        "Ulvestad": {
+          "total": 1,
+          "games": [
+            "aisthesis_jptwee20150526"
+          ]
+        }
+      },
+      "ref": [
+        "Fischer",
+        "Morphy"
+      ],
+      "ECO": "C57"
+    },
     "Philidor": {
       "total": 1,
       "variations": {

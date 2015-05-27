@@ -15,7 +15,8 @@
 7.f4 Be7 
 8.Nd2 O-O
 9.Nf3 a6 
-10.Ba4 { mf: +0.5} Bc5
+10.Ba4 { mf: +0.5}
+11...Bc5
 11.f5
 (   11.Bb3 Bd7
     12.Ng5 h6
@@ -25,17 +26,37 @@
     12.fxe5)
 (   11.a3)
 (   11.Ng5)
-11...d6
-(   11...d5
-    12.exd5 Qxd5
-    13.Bb3 Qd8
-    14.Bg5)
+11...d5
 (   11...h6)
 (   11...b5)
 (   11...Ba7)
-12.a3 Bd7
-13.Bb3 h6
-14.Bf4
+(   11...d6
+    12.a3 Bd7
+    13.Bb3 h6
+    14.Bf4)
+12.Bb3
+(   12.exd5 Qxd5
+    (   12...Na5)
+    (   12...Ne7
+        13.f6 gxf6)
+    13.Bb3 Qd6
+    (   13...Qd8
+        14.Bg5)
+    14.Ng5 Na5
+    15.Ne4 Qd8
+    16.f6 g6
+    17.Qd2)
+12...Na5
+(   12...dxe4
+    13.Ng5 h6
+    14.Qh5 hxg5
+    15.Bxg5 Be7
+    16.f6)
+(   12...Ne7
+    13.f6 gxf6
+    14.Bh6)
+13.Bxd5 c6
+14.Bb3 {mf: +1.0}
 
 [Event "Playing on Chess Time"]
 [Site "ChessTime"]
@@ -43,7 +64,7 @@
 [Round "1"]
 [White "jptwee"]
 [Black "aisthesis"]
-[Result "?"]
+[Result "0-1"]
 [ECO "C78"]
 
 1.e4 e5 
@@ -70,3 +91,37 @@
 17.Qf1 Bf3+ 
 18.Kg1 Bxe5 
 
+[Event "Playing on Chess Time"]
+[Site "ChessTime"]
+[Date "2015.05.26"]
+[Round "1"]
+[White "aisthesis"]
+[Black "jptwee"]
+[Result ""]
+[ECO "C57"]
+
+1.e4 e5 
+2.Nf3 Nc6 
+3.Bc4 {mf: intending to play Evan's gambit}
+3...Nf6
+4.Ng5 d5
+5.exd5 b5?! {Ulvestad}
+6.Bf1 Nxd5
+7.Bxb5 Bd7
+8.Nxf7 {Komodo 8: 1.21 (best)}
+(   8.h4)
+(   8.d3)
+(   8.Qf3 Qxg5
+    9.Qxd5 {mf: white is a pawn up,
+    and black can't castle long because of
+    9...O-O-O 10.Ba6+ Kb8 11.Qb5+, but
+    after 9...Qf6 black seems to be leading in 
+    development})
+8...Kxf7+
+9.Qf3+ Ke6
+(   9...Nf4
+    10.Bxc6 Bxc6
+    11.Qxc6)
+10.Bc4 Ne7
+11.d4 c6
+12.de5 Qb8)
