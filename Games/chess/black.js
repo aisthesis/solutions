@@ -12,7 +12,8 @@
         '2.Nf3': {
           '2..Nc6': {
             '3.Bb5': 'Spanish',
-            '3.Bc4': 'Italian'
+            '3.Bc4': 'Italian',
+            '3.c3': 'Ponziani'
           }
         },
         '2.Nc3': {},

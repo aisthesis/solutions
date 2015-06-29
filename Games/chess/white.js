@@ -10,7 +10,11 @@
       '1..e5': {
         '2.Nf3': {
           '2..Nc6': {
-            '3.Bb5': 'Spanish'
+            '3.Bb5': 'Spanish',
+            '3.Bc4': {
+              '3..Nf6': 'TwoKnights',
+              '3..Bc5': 'Italian'
+            }
           },
           '2..Nf6': 'Russian',
           '2..d6': 'Philidor'
