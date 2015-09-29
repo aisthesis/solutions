@@ -19,8 +19,11 @@
         },
         "5..Be7": {}
       },
-      "ref": "http://www.masterchessopenings.com/c51-c52-evans-gambit.html"
-    }
+      "4..Bb6 5.0-0": {
+        "Anderssen_Mieses1867": ["MyFavorites (HIARCS) 44"]
+      }
+    },
+    "ref": "http://www.masterchessopenings.com/c51-c52-evans-gambit.html"
   };
   console.log(repertoire);
   return  repertoire;
