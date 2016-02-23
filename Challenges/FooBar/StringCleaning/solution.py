@@ -3,11 +3,12 @@ def answer(chunk, word):
     if chunk.find(word) < 0:
         return chunk
     residues = _find_all_residues(chunk, word)
-    answers = []
+    best_ans = '{'
     for residue in residues:
-        answers.append(answer(residue, word))
-    answers.sort()
-    return answers[0]
+        curr_ans = answer(residue, word)
+        if curr_ans < best_ans:
+            best_ans = curr_ans
+    return best_ans
     
 def _find_all_residues(chunk, word):
     indices = _find_all_indices(chunk, word)
