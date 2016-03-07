@@ -20,15 +20,10 @@ class SquareSolver(object):
     def __init__(self, n):
         self.n = n
         self.squares = self._get_squares()
-        self.prev_memo = [0] * (n + 1)
-        self.curr_memo = self.prev_memo[:]
-        for square in self.squares:
-            self.prev_memo[square] = 1
+        self.memo = [0] * (n + 1)
 
     def get_answer(self):
-        while not self.prev_memo[self.n]:
-            self._fill_memo()
-        return self.prev_memo[self.n]
+        return self._get_ans(self.n)
 
     def _get_squares(self):
         squares = []
@@ -40,20 +35,26 @@ class SquareSolver(object):
             i_sq = i * i
         return squares
 
-    def _fill_memo(self):
-        self.curr_memo = self.prev_memo[:]
-        for i in range(1, self.n + 1):
-            if self.prev_memo[i]:
-                for square in self.squares:
-                    if square + i > self.n:
-                        break
-                    if not self.curr_memo[i + square]:
-                        self.curr_memo[i + square] = self.prev_memo[i] + 1
-        self.prev_memo = self.curr_memo[:]
+    def _get_ans(self, m):
+        if self.memo[m]:
+            return self.memo[m]
+        if m in self.squares:
+            self.memo[m] = 1
+            return self.memo[m]
+        best_ans = m
+        for square in self.squares:
+            if square > m:
+                break
+            ans = self._get_ans(m - square) + 1
+            if ans < best_ans:
+                best_ans = ans
+        self.memo[m] = best_ans
+        return best_ans
 
 if __name__ == '__main__':
     print(answer(24))
     print(answer(160))
     print(answer(1))
     print(answer(10000))
+    # leads to RuntimeError: maximum recursion depth exceeded in cmp
     print(answer(9999))
