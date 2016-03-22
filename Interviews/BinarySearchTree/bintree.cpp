@@ -12,13 +12,12 @@
 
 class BinaryTree {
     private:
-        class Node {
-            public:
-                Node *left;
-                Node *right;
-                int data;
-                Node(const int &data);
-                ~Node();
+        struct Node {
+            Node *left;
+            Node *right;
+            int data;
+            Node(const int &data);
+            ~Node();
         };
         Node *root;
         void insert(const int &data, Node *&node);
@@ -35,6 +34,7 @@ int main() {
     tree.insert(3);
     tree.insert(2);
     tree.insert(4);
+    tree.insert(6);
     int val = 5;
     if (tree.search(val)) {
         std::cout << val << " found" << std::endl;
@@ -49,6 +49,9 @@ int main() {
     else {
         std::cout << val << " NOT found" << std::endl;
     }
+    BinaryTree *tree2 = new BinaryTree();
+    tree2->insert(7);
+    delete tree2;
     return 0;
 }
 
@@ -58,6 +61,7 @@ BinaryTree::BinaryTree() {
 
 BinaryTree::~BinaryTree() {
     if (root) { delete root; }
+    root = NULL;
 }
 
 BinaryTree::Node::Node(const int &data) {
@@ -67,9 +71,15 @@ BinaryTree::Node::Node(const int &data) {
 }
 
 BinaryTree::Node::~Node() {
-    delete left;
-    delete right;
-    std::cout << "deleting node with value " << data << std::endl;
+    if (left) {
+        delete left;
+        left = NULL;
+    }
+    if (right) {
+        delete right;
+        right = NULL;
+    }
+    std::cout << "deleted node with value " << data << std::endl;
 }
 
 void BinaryTree::insert(const int &data, Node *&node) {
