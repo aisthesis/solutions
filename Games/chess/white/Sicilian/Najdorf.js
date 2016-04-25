@@ -19,7 +19,9 @@
         'Rublevsky_Ivanchuk2007': ['MyFavorites.png']
       },
       '7..Nc6': {
-        'Short_Kasparov1993': []
+        'Fischer_Bielicki1960': ['Robert_James_Fischer.png'],
+        'Fischer_Dely1967': ['Robert_James_Fischer.png'],
+        'cattleman_lupu2016': ['MyFavorites.png']
       },
     }
   };
