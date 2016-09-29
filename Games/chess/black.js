@@ -13,7 +13,8 @@
           '2..Nc6': {
             '3.Bb5': 'Spanish',
             '3.Bc4': 'Italian',
-            '3.c3': 'Ponziani'
+            '3.c3': 'Ponziani',
+            '3.Nc3,Nf6': 'FourKnights',
           }
         },
         '2.Nc3': {},
