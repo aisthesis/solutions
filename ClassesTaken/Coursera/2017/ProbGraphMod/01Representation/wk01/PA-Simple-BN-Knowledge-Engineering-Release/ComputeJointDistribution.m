@@ -25,7 +25,12 @@ function Joint = ComputeJointDistribution(F)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
-Joint = struct('var', [], 'card', [], 'val', []); % Returns empty factor. Change this.
+% adding 0 guarantees a deep copy of each array
+% http://stackoverflow.com/questions/35818295/octave-force-deepcopy
+Joint = struct('var', F(1).var + 0, 'card', F(1).card + 0, 'val', F(1).val + 0);
+for i = 2:length(F)
+    Joint = FactorProduct(Joint, F(i));
+endfor;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end
