@@ -35,9 +35,20 @@ phenotypeFactor = struct('var', [], 'card', [], 'val', []);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 
 % Fill in phenotypeFactor.var.  This should be a 1-D row vector.
+phenotypeFactor.var = [phenotypeVar, genotypeVar];
+
 % Fill in phenotypeFactor.card.  This should be a 1-D row vector.
+nGenotypes = numel(alphaList);
+phenotypeFactor.card = [2, nGenotypes];
 
 phenotypeFactor.val = zeros(1, prod(phenotypeFactor.card));
 % Replace the zeros in phentoypeFactor.val with the correct values.
+phenotypeMask = ones(nGenotypes, 1);
+genotypeVals = reshape(1:nGenotypes, nGenotypes, 1);
+indices = AssignmentToIndex([phenotypeMask, genotypeVals], phenotypeFactor.card);
+phenotypeFactor.val(indices) = alphaList;
+phenotypeMask *= 2;
+indices = AssignmentToIndex([phenotypeMask, genotypeVals], phenotypeFactor.card);
+phenotypeFactor.val(indices) = 1 - alphaList;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
