@@ -57,9 +57,28 @@ genotypeFactor = struct('var', [], 'card', [], 'val', []);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 
 % Fill in genotypeFactor.var.  This should be a 1-D row vector.
+genotypeFactor.var = [genotypeVarChild, genotypeVarParentOne, genotypeVarParentTwo];
+
 % Fill in genotypeFactor.card.  This should be a 1-D row vector.
+numGenotypes = nchoosek(numAlleles, 2) + numAlleles;
+genotypeFactor.card = repmat(numGenotypes, 1, 3);
 
 genotypeFactor.val = zeros(1, prod(genotypeFactor.card));
 % Replace the zeros in genotypeFactor.val with the correct values.
+% traverse using parent genotypes (i, j) and (k, l)
+% increment child genotypes (i, k), (i, l), (j, k) and (j, l) by 0.25 each
+baseProb = 0.25;
+for genotypeParentOne = 1:numGenotypes
+    for genotypeParentTwo = 1:numGenotypes
+        allelesOne = genotypesToAlleles(genotypeParentOne, :);
+        allelesTwo = genotypesToAlleles(genotypeParentTwo, :);
+        for i = allelesOne
+            for j = allelesTwo
+                genotypeFactor.val(AssignmentToIndex([allelesToGenotypes(i, j), ...
+                    genotypeParentOne, genotypeParentTwo], genotypeFactor.card)) += baseProb;
+            endfor;
+        endfor;
+    endfor;
+endfor;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
