@@ -59,9 +59,24 @@ phenotypeFactor = struct('var', [], 'card', [], 'val', []);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 
 % Fill in phenotypeFactor.var.  This should be a 1-D row vector.
+phenotypeFactor.var = [phenotypeVar, geneCopyVarOne, geneCopyVarTwo];
+
 % Fill in phenotypeFactor.card.  This should be a 1-D row vector.
+phenotypeFactor.card = [2, numAlleles, numAlleles];
 
 phenotypeFactor.val = zeros(1, prod(phenotypeFactor.card));
 % Replace the zeros in phentoypeFactor.val with the correct values.
+numGenotypes = nchoosek(numAlleles, 2) + numAlleles;
+for genotypeId = 1:numGenotypes
+    % probability that the trait is manifested
+    prob = alphaList(genotypeId);
+    alleles = genotypesToAlleles(genotypeId, :);
+    phenotypeFactor.val(AssignmentToIndex([1, alleles], phenotypeFactor.card)) = prob;
+    phenotypeFactor.val(AssignmentToIndex([1, fliplr(alleles)], phenotypeFactor.card)) = prob;
+    % probability that the trais is not manifested
+    prob = 1 - prob;
+    phenotypeFactor.val(AssignmentToIndex([2, alleles], phenotypeFactor.card)) = prob;
+    phenotypeFactor.val(AssignmentToIndex([2, fliplr(alleles)], phenotypeFactor.card)) = prob;
+endfor;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
