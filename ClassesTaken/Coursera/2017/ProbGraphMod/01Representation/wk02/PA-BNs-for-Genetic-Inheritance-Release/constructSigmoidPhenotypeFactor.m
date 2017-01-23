@@ -46,9 +46,35 @@ phenotypeFactor = struct('var', [], 'card', [], 'val', []);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 
 % Fill in phenotypeFactor.var.  This should be a 1-D row vector.
+phenotypeFactor.var = [phenotypeVar, geneCopyVarOneList', geneCopyVarTwoList'];
+
 % Fill in phenotypeFactor.card.  This should be a 1-D row vector.
+% phenotypeFactor.card = [2, numel(geneCopyVarOneList), numel(geneCopyVarTwoList)]
+phenotypeFactor.card = [2];
+% call once for each parent
+phenotypeFactor.card = setCard(phenotypeFactor.card, alleleWeights);
+phenotypeFactor.card = setCard(phenotypeFactor.card, alleleWeights);
 
 phenotypeFactor.val = zeros(1, prod(phenotypeFactor.card));
 % Replace the zeros in phentoypeFactor.val with the correct values.
+assignments = IndexToAssignment(1:numel(phenotypeFactor.val), phenotypeFactor.card);
+mask = assignments(:, 1) == 1;
+genotypeAssignments = assignments(mask, 2:end);
+
+for i = 1:size(genotypeAssignments)(1)
+    row = genotypeAssignments(i, :);
+    wts = [alleleWeights{1}(row(1)), alleleWeights{2}(row(2)), alleleWeights{1}(row(3)), alleleWeights{2}(row(4))];
+    prob = computeSigmoid(sum(wts));
+    phenotypeFactor.val(AssignmentToIndex([1, row], phenotypeFactor.card)) = prob;
+    phenotypeFactor.val(AssignmentToIndex([2, row], phenotypeFactor.card)) = 1 - prob;
+endfor;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+endfunction;
+
+function cardVec = setCard(cardVec, alleleWeights)
+    for i = 1:length(alleleWeights)
+        cardVec = [cardVec, numel(alleleWeights{i})];
+    endfor;
+endfunction;
+
