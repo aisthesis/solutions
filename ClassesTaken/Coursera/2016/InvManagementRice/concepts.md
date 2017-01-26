@@ -1,4 +1,4 @@
-Important Concepts in Portfolio Management
+Portfolio Management Concepts
 ==
 Utility
 --
