@@ -23,7 +23,13 @@ if (length(allFactors) <= F)
 end
 
 % Your code here:
-factors = allFactors; %%% REMOVE THIS LINE
+ix = AssignmentToIndex([1, 1], allFactors(1).card);
+scores = zeros(size(allFactors));
+for i = 1:numel(scores)
+    scores(i) = allFactors(i).val(ix);
+endfor;
+[values, indices] = sort(scores, 'descend');
+factors = allFactors(indices)(1:F);
 
 end
 
