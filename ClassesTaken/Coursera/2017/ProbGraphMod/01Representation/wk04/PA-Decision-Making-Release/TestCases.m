@@ -29,6 +29,9 @@ end
 % OUTPUT
 % allEU => [7.3000, 3.8000]
 
+% TODO
+return;
+
 % Get EUF...
 euf = CalculateExpectedUtilityFactor(I1);
 % PrintFactor(euf) =>
