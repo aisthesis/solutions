@@ -36,15 +36,13 @@ euf = CalculateExpectedUtilityFactor(I1);
 % 1	7.300000
 % 2	3.800000
 
-disp('OptimizeMEU results:');
-[meu optdr] = OptimizeMEU(I1)
-disp('OptimizeWithJointUtility results:');
-[meu optdr] = OptimizeWithJointUtility(I1)
-% TODO
-PrintFactor(optdr)
-return;
+% disp('OptimizeMEU results:');
+% [meu optdr] = OptimizeMEU(I1)
+% disp('OptimizeWithJointUtility results:');
+% [meu optdr] = OptimizeWithJointUtility(I1)
+% disp('OptimizeLinearExpectations results:');
+% [meu optdr] = OptimizeLinearExpectations(I1)
 
-[meu optdr] = OptimizeLinearExpectations(I1)
 % OUTPUT
 % All should have the same results: 
 % meu => 7.3000
@@ -94,7 +92,12 @@ euf = CalculateExpectedUtilityFactor(I2);
 % 1	7.500000
 % 2	1.000000
 
+disp('Optimize MEU results 2:');
 [meu optdr] = OptimizeMEU(I2)
+% TODO
+PrintFactor(optdr)
+return;
+
 [meu optdr] = OptimizeWithJointUtility(I2)
 [meu optdr] = OptimizeLinearExpectations(I2)
 % OUTPUT
