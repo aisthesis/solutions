@@ -36,12 +36,14 @@ euf = CalculateExpectedUtilityFactor(I1);
 % 1	7.300000
 % 2	3.800000
 
+disp('OptimizeMEU results:');
 [meu optdr] = OptimizeMEU(I1)
+disp('OptimizeWithJointUtility results:');
+[meu optdr] = OptimizeWithJointUtility(I1)
 % TODO
 PrintFactor(optdr)
 return;
 
-[meu optdr] = OptimizeWithJointUtility(I1)
 [meu optdr] = OptimizeLinearExpectations(I1)
 % OUTPUT
 % All should have the same results: 

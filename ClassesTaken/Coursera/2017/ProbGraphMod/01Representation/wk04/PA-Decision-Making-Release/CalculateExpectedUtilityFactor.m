@@ -28,7 +28,7 @@ function EUF = CalculateExpectedUtilityFactor( I )
     allVars = unique([ F(:).var ]);
     toKeep = D.var;
     toEliminate = setdiff(allVars, toKeep);
-    factors = VariableElimination(F, toEliminate, []);
+    factors = VariableElimination(F, toEliminate);
 
     parentsD = factors(1);
     for i = 2:length(factors),
