@@ -29,9 +29,6 @@ end
 % OUTPUT
 % allEU => [7.3000, 3.8000]
 
-% TODO
-return;
-
 % Get EUF...
 euf = CalculateExpectedUtilityFactor(I1);
 % PrintFactor(euf) =>
@@ -40,6 +37,10 @@ euf = CalculateExpectedUtilityFactor(I1);
 % 2	3.800000
 
 [meu optdr] = OptimizeMEU(I1)
+% TODO
+PrintFactor(optdr)
+return;
+
 [meu optdr] = OptimizeWithJointUtility(I1)
 [meu optdr] = OptimizeLinearExpectations(I1)
 % OUTPUT
