@@ -25,12 +25,31 @@ function [MEU OptimalDecisionRule] = OptimizeMEU( I )
   % 2.  You may find the Matlab/Octave function setdiff useful.
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
 
-  euf = CalculateExpectedUtilityFactor(I);
-  [MEU ix] = max(euf.val);
-  OptimalDecisionRule = struct('var', [], 'card', [], 'val', []);
-  OptimalDecisionRule.var = euf.var;
-  OptimalDecisionRule.card = euf.card;
-  OptimalDecisionRule.val = zeros(1, prod(OptimalDecisionRule.card));
-  OptimalDecisionRule.val(ix) = 1;
-
-end
+    EUF = CalculateExpectedUtilityFactor(I);
+    OptimalDecisionRule = struct('var', [], 'card', [], 'val', []);
+    OptimalDecisionRule.var = EUF.var;
+    OptimalDecisionRule.card = EUF.card;
+    OptimalDecisionRule.val = zeros(prod(OptimalDecisionRule.card), 1);
+    if length(EUF.var) < 2,
+        [MEU myIndex] = max(EUF.val);
+        OptimalDecisionRule.val(myIndex) = 1;
+    else
+        MEU = 0.0;
+        fullAssignment = IndexToAssignment([1:prod(OptimalDecisionRule.card)],OptimalDecisionRule.card);
+        for i = 1:prod(OptimalDecisionRule.card(2:end))
+            subAssignment = IndexToAssignment(i,OptimalDecisionRule.card(2:end));
+            myIndex = [];
+            for j = 1:size(fullAssignment,1)
+                if all(fullAssignment(j,2:size(fullAssignment,2))==subAssignment)
+                    myIndex = [myIndex;j];
+                endif;
+            endfor;
+            Assignment = IndexToAssignment(myIndex,OptimalDecisionRule.card);
+            myValue = GetValueOfAssignment(EUF,Assignment);
+            [myMax mySubIndex] = max(myValue);
+            OptimalDecisionRule.val(myIndex) = 0;
+            OptimalDecisionRule.val(myIndex(mySubIndex)) = 1;
+            MEU = MEU + EUF.val(myIndex(mySubIndex));
+        endfor;
+    endif;
+endfunction;
