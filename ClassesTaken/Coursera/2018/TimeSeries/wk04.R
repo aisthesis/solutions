@@ -1,4 +1,4 @@
-ywSim <- function(phis, sigma=1.0, nIter=10000, seed=FALSE) {
+YwSim <- function(phis, sigma=1.0, nIter=10000, seed=FALSE) {
     if (seed) {
         set.seed(seed)
     }
@@ -28,5 +28,32 @@ ywSim <- function(phis, sigma=1.0, nIter=10000, seed=FALSE) {
     plot(ar.process, main=title)
     acf(ar.process, main='ACF')
     pacf(ar.process, main='PACF')
+}
+
+ExamineArProcess <- function(data) {
+    centered.data <- data - mean(data)
+    par(mfrow=c(3, 1))
+    plot(data, main='Raw data', col='blue', lwd=3)
+    acf(centered.data, main='ACF (centered)', col='red', lwd=3)
+    pacf(centered.data, main='PACF (centered)', col='green', lwd=3)
+}
+
+ModelArProcess <- function(data, p) {
+    centered.data <- data - mean(data)
+    model = NULL
+    r <- acf(centered.data, plot=F)$acf[2:(2 + p - 1)]
+    R <- matrix(1, p, p)
+    for (i in 1:(p - 1)) {
+        for (j in (1:(p - i))) {
+            R[j, j + i] <- r[i]
+            R[j + i, j] <- r[i]
+        }
+    }
+    b <- matrix(r ,nrow=p, ncol=1)
+
+    model$phi.hat <- solve(R, b)
+    model$c0 <- acf(centered.data, type='covariance', plot=F)$acf[1]
+    model$var.hat <- model$c0 * (1 - sum(model$phi.hat * r))
+    return(model)
 }
 
