@@ -9,10 +9,10 @@ ExamineSeries <- function(data, xlim=NULL) {
     centered.data <- data - mean(data)
     par(mfrow=c(3, 1))
     if (length(xlim)) {
-        plot(data, main='Raw data', col='blue', lwd=3, xlim=xlim)
+        plot.ts(data, main='Raw data', col='blue', lwd=3, xlim=xlim)
     }
     else {
-        plot(data, main='Raw data', col='blue', lwd=3)
+        plot.ts(data, main='Raw data', col='blue', lwd=3)
     }
     acf(centered.data, main='ACF (centered)', col='red', lwd=3)
     pacf(centered.data, main='PACF (centered)', col='green', lwd=3)
